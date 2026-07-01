@@ -46,276 +46,6 @@
       "createdAt": "2026-06-26T08:20:00Z"
     }
   ],
-
-  "categories": [
-    {
-      "id": "1",
-      "name": "Electronics",
-      "image": "electronics.png"
-    },
-    {
-      "id": "2",
-      "name": "Fashion",
-      "image": "fashion.png"
-    },
-    {
-      "id": "3",
-      "name": "Home & Kitchen",
-      "image": "home.png"
-    },
-    {
-      "id": "4",
-      "name": "Books",
-      "image": "books.png"
-    },
-    {
-      "id": "5",
-      "name": "Sports",
-      "image": "sports.png"
-    },
-    {
-      "id": "6",
-      "name": "Beauty",
-      "image": "beauty.png"
-    },
-    {
-      "id": "7",
-      "name": "Furniture",
-      "image": "furniture.png"
-    }
-  ],
-
-  "products": [
-    {
-      "id": "1",
-      "categoryId": "1",
-      "name": "Wireless Mouse",
-      "description": "Ergonomic Bluetooth wireless mouse.",
-      "price": 799,
-      "discountPrice": 699,
-      "stock": 25,
-      "brand": "Logitech",
-      "image": "https://picsum.photos/400?random=1",
-      "rating": 4.5
-    },
-    {
-      "id": "2",
-      "categoryId": "1",
-      "name": "Mechanical Keyboard",
-      "description": "RGB mechanical gaming keyboard.",
-      "price": 2499,
-      "discountPrice": 2199,
-      "stock": 18,
-      "brand": "Redragon",
-      "image": "https://picsum.photos/400?random=2",
-      "rating": 4.7
-    },
-    {
-      "id": "3",
-      "categoryId": "1",
-      "name": "Noise Cancelling Headphones",
-      "description": "Wireless over-ear headphones.",
-      "price": 5999,
-      "discountPrice": 5499,
-      "stock": 12,
-      "brand": "Sony",
-      "image": "https://picsum.photos/400?random=3",
-      "rating": 4.8
-    },
-    {
-      "id": "4",
-      "categoryId": "1",
-      "name": "Smart Watch",
-      "description": "Fitness tracking smartwatch.",
-      "price": 3999,
-      "discountPrice": 3599,
-      "stock": 20,
-      "brand": "Noise",
-      "image": "https://picsum.photos/400?random=4",
-      "rating": 4.4
-    },
-    {
-      "id": "5",
-      "categoryId": "2",
-      "name": "Men's T-Shirt",
-      "description": "100% cotton round neck t-shirt.",
-      "price": 599,
-      "discountPrice": 499,
-      "stock": 50,
-      "brand": "Puma",
-      "image": "https://picsum.photos/400?random=5",
-      "rating": 4.3
-    },
-    {
-      "id": "6",
-      "categoryId": "2",
-      "name": "Women's Jeans",
-      "description": "Slim fit stretch denim jeans.",
-      "price": 1499,
-      "discountPrice": 1299,
-      "stock": 35,
-      "brand": "Levi's",
-      "image": "https://picsum.photos/400?random=6",
-      "rating": 4.6
-    },
-    {
-      "id": "7",
-      "categoryId": "2",
-      "name": "Running Shoes",
-      "description": "Lightweight sports running shoes.",
-      "price": 2999,
-      "discountPrice": 2699,
-      "stock": 28,
-      "brand": "Nike",
-      "image": "https://picsum.photos/400?random=7",
-      "rating": 4.7
-    },
-    {
-      "id": "8",
-      "categoryId": "2",
-      "name": "Casual Hoodie",
-      "description": "Comfortable full sleeve hoodie.",
-      "price": 1799,
-      "discountPrice": 1599,
-      "stock": 22,
-      "brand": "Adidas",
-      "image": "https://picsum.photos/400?random=8",
-      "rating": 4.5
-    },
-    {
-      "id": "9",
-      "categoryId": "3",
-      "name": "Electric Kettle",
-      "description": "1.5L stainless steel kettle.",
-      "price": 1299,
-      "discountPrice": 1099,
-      "stock": 30,
-      "brand": "Prestige",
-      "image": "https://picsum.photos/400?random=9",
-      "rating": 4.4
-    },
-    {
-      "id": "10",
-      "categoryId": "3",
-      "name": "Mixer Grinder",
-      "description": "750W kitchen mixer grinder.",
-      "price": 3499,
-      "discountPrice": 3199,
-      "stock": 15,
-      "brand": "Philips",
-      "image": "https://picsum.photos/400?random=10",
-      "rating": 4.6
-    },
-    {
-      "id": "11",
-      "categoryId": "3",
-      "name": "Air Fryer",
-      "description": "Healthy oil-free cooking air fryer.",
-      "price": 4999,
-      "discountPrice": 4499,
-      "stock": 14,
-      "brand": "Philips",
-      "image": "https://picsum.photos/400?random=11",
-      "rating": 4.7
-    },
-    {
-      "id": "12",
-      "categoryId": "4",
-      "name": "The Alchemist",
-      "description": "A magical journey into self-discovery.",
-      "price": 499,
-      "discountPrice": 399,
-      "stock": 40,
-      "brand": "HarperCollins",
-      "image": "https://picsum.photos/400?random=12",
-      "rating": 4.8
-    },
-    {
-      "id": "13",
-      "categoryId": "4",
-      "name": "Atomic Habits",
-      "description": "A proven system for building good habits.",
-      "price": 799,
-      "discountPrice": 699,
-      "stock": 32,
-      "brand": "Penguin",
-      "image": "https://picsum.photos/400?random=13",
-      "rating": 4.9
-    },
-    {
-      "id": "14",
-      "categoryId": "5",
-      "name": "Yoga Mat",
-      "description": "Non-slip premium yoga mat for workouts.",
-      "price": 1299,
-      "discountPrice": 1099,
-      "stock": 24,
-      "brand": "Decathlon",
-      "image": "https://picsum.photos/400?random=14",
-      "rating": 4.5
-    },
-    {
-      "id": "15",
-      "categoryId": "5",
-      "name": "Cricket Bat",
-      "description": "Professional grade cricket bat.",
-      "price": 2499,
-      "discountPrice": 2199,
-      "stock": 16,
-      "brand": "SSF",
-      "image": "https://picsum.photos/400?random=15",
-      "rating": 4.6
-    },
-    {
-      "id": "16",
-      "categoryId": "6",
-      "name": "Lipstick Set",
-      "description": "Matte lipstick collection with 6 shades.",
-      "price": 1499,
-      "discountPrice": 1299,
-      "stock": 18,
-      "brand": "Maybelline",
-      "image": "https://picsum.photos/400?random=16",
-      "rating": 4.4
-    },
-    {
-      "id": "17",
-      "categoryId": "6",
-      "name": "Face Serum",
-      "description": "Vitamin C brightening face serum.",
-      "price": 1199,
-      "discountPrice": 999,
-      "stock": 22,
-      "brand": "The Body Shop",
-      "image": "https://picsum.photos/400?random=17",
-      "rating": 4.7
-    },
-    {
-      "id": "18",
-      "categoryId": "7",
-      "name": "Ergonomic Chair",
-      "description": "Comfortable office chair with lumbar support.",
-      "price": 7999,
-      "discountPrice": 7499,
-      "stock": 10,
-      "brand": "Wakefit",
-      "image": "https://picsum.photos/400?random=18",
-      "rating": 4.8
-    },
-    {
-      "id": "19",
-      "categoryId": "7",
-      "name": "Study Table",
-      "description": "Compact wooden study table for home offices.",
-      "price": 5999,
-      "discountPrice": 5499,
-      "stock": 12,
-      "brand": "Home Centre",
-      "image": "https://picsum.photos/400?random=19",
-      "rating": 4.5
-    }
-  ],
-
   "addresses": [
     {
       "id": "1",
@@ -389,12 +119,12 @@
     {
       "id": "1",
       "userId": "1",
-      "totalPrice": 6398.00
+      "totalPrice": 83.97
     },
     {
       "id": "2",
       "userId": "2",
-      "totalPrice": 3798.00
+      "totalPrice": 158.90
     },
     {
       "id": "3",
@@ -404,12 +134,12 @@
     {
       "id": "4",
       "userId": "4",
-      "totalPrice": 2698.00
+      "totalPrice": 15.99
     },
     {
       "id": "5",
       "userId": "5",
-      "totalPrice": 1499.00
+      "totalPrice": 109.95
     }
   ],
 
@@ -417,44 +147,44 @@
     {
       "id": "1",
       "cartId": "1",
-      "productId": "3",
+      "productId": "5",
       "quantity": 1,
-      "subtotal": 5499.00
+      "subtotal": 55.99
     },
     {
       "id": "2",
       "cartId": "1",
-      "productId": "5",
+      "productId": "11",
       "quantity": 2,
-      "subtotal": 998.00
+      "subtotal": 27.98
     },
     {
       "id": "3",
       "cartId": "2",
       "productId": "2",
       "quantity": 1,
-      "subtotal": 2199.00
+      "subtotal": 109.95
     },
     {
       "id": "4",
       "cartId": "2",
-      "productId": "9",
+      "productId": "7",
       "quantity": 1,
-      "subtotal": 1099.00
+      "subtotal": 48.95
     },
     {
       "id": "5",
       "cartId": "4",
-      "productId": "7",
+      "productId": "8",
       "quantity": 1,
-      "subtotal": 2698.00
+      "subtotal": 15.99
     },
     {
       "id": "6",
       "cartId": "5",
-      "productId": "16",
+      "productId": "1",
       "quantity": 1,
-      "subtotal": 1299.00
+      "subtotal": 109.95
     }
   ],
 
@@ -465,7 +195,7 @@
       "addressId": "1",
       "orderDate": "2026-06-25T14:30:00Z",
       "status": "delivered",
-      "totalAmount": 13697.00,
+      "totalAmount": 107.09,
       "paymentMethod": "credit_card",
       "paymentStatus": "completed"
     },
@@ -475,7 +205,7 @@
       "addressId": "3",
       "orderDate": "2026-06-26T10:15:00Z",
       "status": "processing",
-      "totalAmount": 7098.00,
+      "totalAmount": 158.90,
       "paymentMethod": "debit_card",
       "paymentStatus": "completed"
     },
@@ -485,7 +215,7 @@
       "addressId": "4",
       "orderDate": "2026-06-27T09:45:00Z",
       "status": "shipped",
-      "totalAmount": 2598.00,
+      "totalAmount": 53.97,
       "paymentMethod": "upi",
       "paymentStatus": "completed"
     },
@@ -495,7 +225,7 @@
       "addressId": "5",
       "orderDate": "2026-06-28T16:20:00Z",
       "status": "delivered",
-      "totalAmount": 10998.00,
+      "totalAmount": 178.94,
       "paymentMethod": "wallet",
       "paymentStatus": "completed"
     },
@@ -505,7 +235,7 @@
       "addressId": "6",
       "orderDate": "2026-06-29T11:00:00Z",
       "status": "pending",
-      "totalAmount": 3298.00,
+      "totalAmount": 68.25,
       "paymentMethod": "credit_card",
       "paymentStatus": "pending"
     }
@@ -515,86 +245,86 @@
     {
       "id": "1",
       "orderId": "1",
-      "productId": "3",
+      "productId": "5",
       "quantity": 1,
-      "price": 5499.00
+      "price": 55.99
     },
     {
       "id": "2",
       "orderId": "1",
-      "productId": "10",
-      "quantity": 1,
-      "price": 3199.00
+      "productId": "11",
+      "quantity": 2,
+      "price": 27.98
     },
     {
       "id": "3",
       "orderId": "1",
-      "productId": "6",
+      "productId": "3",
       "quantity": 1,
-      "price": 1299.00
+      "price": 13.13
     },
     {
       "id": "4",
       "orderId": "1",
-      "productId": "14",
-      "quantity": 2,
-      "price": 2198.00
+      "productId": "4",
+      "quantity": 1,
+      "price": 9.99
     },
     {
       "id": "5",
       "orderId": "2",
       "productId": "2",
       "quantity": 1,
-      "price": 2199.00
+      "price": 109.95
     },
     {
       "id": "6",
       "orderId": "2",
-      "productId": "11",
+      "productId": "7",
       "quantity": 1,
-      "price": 4499.00
+      "price": 48.95
     },
     {
       "id": "7",
       "orderId": "3",
-      "productId": "7",
+      "productId": "8",
       "quantity": 1,
-      "price": 2699.00
+      "price": 15.99
     },
     {
       "id": "8",
       "orderId": "3",
-      "productId": "17",
-      "quantity": 1,
-      "price": 999.00
+      "productId": "9",
+      "quantity": 2,
+      "price": 37.98
     },
     {
       "id": "9",
       "orderId": "4",
-      "productId": "4",
+      "productId": "1",
       "quantity": 1,
-      "price": 3599.00
+      "price": 109.95
     },
     {
       "id": "10",
       "orderId": "4",
-      "productId": "18",
-      "quantity": 2,
-      "price": 14998.00
+      "productId": "6",
+      "quantity": 1,
+      "price": 68.99
     },
     {
       "id": "11",
       "orderId": "5",
-      "productId": "13",
+      "productId": "10",
       "quantity": 1,
-      "price": 699.00
+      "price": 55.26
     },
     {
       "id": "12",
       "orderId": "5",
-      "productId": "15",
+      "productId": "12",
       "quantity": 1,
-      "price": 2199.00
+      "price": 12.99
     }
   ],
 
@@ -602,17 +332,17 @@
     {
       "id": "1",
       "userId": "1",
-      "productId": "3",
+      "productId": "5",
       "rating": 5,
-      "review": "Excellent sound quality and comfort. Highly recommended!",
+      "review": "Excellent quality and very comfortable. Highly recommended!",
       "reviewDate": "2026-06-26T08:00:00Z"
     },
     {
       "id": "2",
       "userId": "1",
-      "productId": "10",
+      "productId": "11",
       "rating": 4,
-      "review": "Great mixer grinder, very powerful and efficient.",
+      "review": "Great product, very durable and well-made.",
       "reviewDate": "2026-06-26T10:30:00Z"
     },
     {
@@ -620,55 +350,55 @@
       "userId": "2",
       "productId": "2",
       "rating": 5,
-      "review": "Best mechanical keyboard I've ever used. RGB is amazing!",
+      "review": "Amazing quality! Best purchase ever!",
       "reviewDate": "2026-06-27T14:00:00Z"
     },
     {
       "id": "4",
       "userId": "2",
-      "productId": "11",
+      "productId": "7",
       "rating": 4,
-      "review": "Air fryer works perfectly. Food comes out crispy and healthy.",
+      "review": "Good value for money. Satisfied with the purchase.",
       "reviewDate": "2026-06-27T15:45:00Z"
     },
     {
       "id": "5",
       "userId": "3",
-      "productId": "7",
+      "productId": "8",
       "rating": 5,
-      "review": "Running shoes are very comfortable and look great!",
+      "review": "Perfect! Exactly as described. Will buy again!",
       "reviewDate": "2026-06-28T12:20:00Z"
     },
     {
       "id": "6",
       "userId": "3",
-      "productId": "17",
+      "productId": "9",
       "rating": 4,
-      "review": "Face serum works wonders. Skin feels much brighter.",
+      "review": "Good product. Delivery was fast too.",
       "reviewDate": "2026-06-28T13:50:00Z"
     },
     {
       "id": "7",
       "userId": "4",
-      "productId": "4",
+      "productId": "1",
       "rating": 4,
-      "review": "Smart watch has great features. Battery life is decent.",
+      "review": "Great quality and fast shipping!",
       "reviewDate": "2026-06-29T09:30:00Z"
     },
     {
       "id": "8",
       "userId": "4",
-      "productId": "18",
+      "productId": "6",
       "rating": 5,
-      "review": "Ergonomic chair is a game changer. Very comfortable for long hours!",
+      "review": "Excellent product! Very satisfied with my purchase.",
       "reviewDate": "2026-06-29T10:15:00Z"
     },
     {
       "id": "9",
       "userId": "5",
-      "productId": "13",
+      "productId": "10",
       "rating": 5,
-      "review": "Atomic Habits is a life-changing book. Must read!",
+      "review": "Outstanding quality. Highly recommended!",
       "reviewDate": "2026-06-30T07:00:00Z"
     }
   ],
@@ -677,12 +407,12 @@
     {
       "id": "1",
       "userId": "1",
-      "productId": "3"
+      "productId": "5"
     },
     {
       "id": "2",
       "userId": "1",
-      "productId": "18"
+      "productId": "1"
     },
     {
       "id": "3",
@@ -692,32 +422,32 @@
     {
       "id": "4",
       "userId": "2",
-      "productId": "11"
+      "productId": "7"
     },
     {
       "id": "5",
       "userId": "3",
-      "productId": "7"
+      "productId": "8"
     },
     {
       "id": "6",
       "userId": "3",
-      "productId": "6"
+      "productId": "9"
     },
     {
       "id": "7",
       "userId": "4",
-      "productId": "4"
+      "productId": "1"
     },
     {
       "id": "8",
       "userId": "4",
-      "productId": "13"
+      "productId": "6"
     },
     {
       "id": "9",
       "userId": "5",
-      "productId": "16"
+      "productId": "10"
     },
     {
       "id": "10",

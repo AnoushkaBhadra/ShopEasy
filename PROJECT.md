@@ -177,10 +177,7 @@ http://<YOUR_IP>:3000
 |--------|----------|-------------|
 | GET | `/products` | Get all products |
 | GET | `/products/:id` | Get product details |
-| POST | `/products` | Add product |
-| PUT | `/products/:id` | Replace product |
-| PATCH | `/products/:id` | Update product |
-| DELETE | `/products/:id` | Delete product |
+
 
 ---
 
@@ -190,9 +187,7 @@ http://<YOUR_IP>:3000
 |--------|----------|-------------|
 | GET | `/categories` | Get all categories |
 | GET | `/categories/:id` | Get category |
-| POST | `/categories` | Add category |
-| PATCH | `/categories/:id` | Update category |
-| DELETE | `/categories/:id` | Delete category |
+
 
 ---
 
