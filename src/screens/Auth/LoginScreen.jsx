@@ -29,6 +29,7 @@ export default function LoginScreen({ navigation }) {
             Alert.alert("Success", "Login successful");
 
             //navigation.replace("AppDrawer");
+            
 
             console.log("LOGIN SUCCESSFUL");
         } catch (err) {
