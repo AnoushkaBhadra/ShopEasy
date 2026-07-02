@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "server": "json-server --watch db.json --port 3000"
+    "server": "json-server --watch db.json --port 3000"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "json-server": "^1.0.0-beta.15"
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.3.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "json-server": "^1.0.0-beta.15",
+    "jsonwebtoken": "^9.0.3"
   }
 }
