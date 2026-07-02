@@ -269,7 +269,139 @@ http://<YOUR_IP>:3000
 
 ---
 
-## Assumptions
-- External API used for product catalog (e.g., Fake Store API)
-- Backend may be simulated using JSON Server
-- Image uploads are optional and handled via device camera
+
+---
+
+# Navigation Architecture
+
+The application uses a combination of **Stack Navigation**, **Drawer Navigation**, and **Bottom Tab Navigation** to separate authentication, shopping, and utility features.
+
+```
+RootStack
+│
+├── WelcomeScreen
+│
+├── AuthStack
+│   ├── LoginScreen
+│   └── RegistrationScreen
+│
+└── AppDrawer
+    │
+    ├── ShopEasy
+    │   │
+    │   └── AppStack
+    │       │
+    │       ├── AppTabs
+    │       │   ├── HomeScreen
+    │       │   ├── CartScreen
+    │       │   └── ProfileScreen
+    │       │
+    │       ├── ProductDetailsScreen
+    │       ├── SearchResultsScreen
+    │       ├── CheckoutScreen
+    │       ├── AddressSelectionScreen
+    │       ├── PaymentScreen
+    │       ├── OrderConfirmationScreen
+    │       ├── OrderHistoryScreen
+    │       ├── QRScannerScreen
+    │       └── ImagePickerScreen
+    │
+    ├── OrdersScreen
+    ├── SettingsScreen
+    ├── SavedAddressesScreen
+    └── HelpSupportScreen
+```
+
+### Navigation Components
+
+| Component | Purpose |
+|-----------|---------|
+| **RootStack** | Root navigator that decides whether the user enters the authentication flow or the main application. |
+| **AuthStack** | Contains all authentication-related screens. |
+| **AppDrawer** | Provides global navigation to Orders, Settings, Saved Addresses, and Help & Support. |
+| **AppStack** | Handles the main shopping flow and screens that are pushed on top of the bottom tabs. |
+| **AppTabs** | Bottom tab navigation for the three primary sections: Home, Cart, and Profile. |
+
+---
+
+# Screen Structure
+
+## Authentication
+
+| Screen | Purpose |
+|---------|---------|
+| **WelcomeScreen** | Initial landing screen with options to Login or Register. |
+| **LoginScreen** | Authenticates existing users and stores the JWT token. |
+| **RegistrationScreen** | Registers a new user account. |
+
+---
+
+## Home
+
+| Screen | Purpose |
+|---------|---------|
+| **HomeScreen** | Displays the product catalogue fetched from the API. |
+| **ProductDetailsScreen** | Displays detailed information about a selected product. |
+| **SearchResultsScreen** | Displays products matching the user's search or filters. |
+
+---
+
+## Cart & Checkout
+
+| Screen | Purpose |
+|---------|---------|
+| **CartScreen** | Displays cart items, quantities, and total price. |
+| **CheckoutScreen** | Collects order details and begins the checkout process. |
+| **AddressSelectionScreen** | Allows users to choose a delivery address manually or using the map. |
+| **PaymentScreen** | Handles payment method selection and payment confirmation. |
+| **OrderConfirmationScreen** | Displays successful order placement details. |
+
+---
+
+## Orders
+
+| Screen | Purpose |
+|---------|---------|
+| **OrdersScreen** | Displays all current and previous orders from the drawer menu. |
+| **OrderHistoryScreen** | Displays the authenticated user's completed order history. |
+
+---
+
+## Profile
+
+| Screen | Purpose |
+|---------|---------|
+| **ProfileScreen** | Displays user profile information and account settings. |
+| **ImagePickerScreen** | Allows the user to select or capture a profile image. |
+
+---
+
+## Scanner
+
+| Screen | Purpose |
+|---------|---------|
+| **QRScannerScreen** | Opens the device camera to scan QR codes or product barcodes. |
+
+---
+
+## Settings
+
+| Screen | Purpose |
+|---------|---------|
+| **SettingsScreen** | Allows users to configure application preferences and account settings. |
+
+---
+
+## Address
+
+| Screen | Purpose |
+|---------|---------|
+| **SavedAddressesScreen** | Displays and manages previously saved delivery addresses. |
+
+---
+
+## Support
+
+| Screen | Purpose |
+|---------|---------|
+| **HelpSupportScreen** | Provides FAQs, contact information, and support resources. |
