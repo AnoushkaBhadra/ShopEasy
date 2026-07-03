@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+//import { StyleSheet, Text, View } from 'react-native';
 import LoadFonts from './src/theme/LoadFonts';
 
 //import LoginScreen from './src/screens/Auth/LoginScreen';
