@@ -8,11 +8,12 @@ import {
 } from "@expo-google-fonts/inter";
 
 import {
-  Manrope_500Medium,
-  Manrope_600SemiBold,
-  Manrope_700Bold,
-  Manrope_800ExtraBold,
-} from "@expo-google-fonts/manrope";
+  EBGaramond_400Regular,
+  EBGaramond_500Medium,
+  EBGaramond_600SemiBold,
+  EBGaramond_700Bold,
+  EBGaramond_800ExtraBold,
+} from "@expo-google-fonts/eb-garamond";
 
 export default function LoadFonts() {
   const [fontsLoaded] = useFonts({
@@ -24,10 +25,11 @@ export default function LoadFonts() {
     Inter_600SemiBold,
     Inter_700Bold,
 
-    Manrope_500Medium,
-    Manrope_600SemiBold,
-    Manrope_700Bold,
-    Manrope_800ExtraBold,
+    EBGaramond_400Regular,
+    EBGaramond_500Medium,
+    EBGaramond_600SemiBold,
+    EBGaramond_700Bold,
+    EBGaramond_800ExtraBold,
   });
 
   return fontsLoaded;

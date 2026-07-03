@@ -1,0 +1,596 @@
+# ShopEasy UI Theme Guide
+
+## Design Philosophy
+
+ShopEasy follows a clean, premium, and timeless design language. The interface should feel calm, spacious, and trustworthy rather than playful. Every screen should emphasize products and content instead of decorative UI elements.
+
+### Core Principles
+
+- Neutral and elegant visual hierarchy
+- Sharp geometry with subtle corners
+- Consistent spacing throughout the application
+- Minimal use of colors
+- Strong typography hierarchy
+- High readability
+- Functional animations only
+- Consistent component sizing across all screens
+
+---
+
+# Visual Identity
+
+### Style
+
+- Modern
+- Minimal
+- Premium
+- Professional
+- Soft earth tones
+- Low visual noise
+
+### Inspiration
+
+- Muji
+- Notion
+- Apple Store
+- Zara
+- Uniqlo
+
+---
+
+# Color Palette
+
+## Primary
+
+| Purpose | Color |
+|----------|---------|
+| Primary | `#7A4E16` |
+| Primary Dark | `#5D3A11` |
+| Primary Light | `#A36A2A` |
+
+Used for
+
+- Primary buttons
+- Active icons
+- Selected tabs
+- Links
+- Important actions
+
+---
+
+## Accent
+
+`#7E9B76`
+
+Used sparingly for
+
+- Success highlights
+- Secondary actions
+- Decorative accents
+
+---
+
+## Backgrounds
+
+| Usage | Color |
+|--------|---------|
+| App Background | `#F7F3EC` |
+| Cards | `#FFFFFF` |
+
+---
+
+## Text
+
+| Usage | Color |
+|--------|---------|
+| Primary Text | `#3D2B1F` |
+| Secondary Text | `#786A5D` |
+
+---
+
+## Feedback
+
+Success
+
+`#4D7C59`
+
+Warning
+
+`#C58A2A`
+
+Error
+
+`#B24B43`
+
+Disabled
+
+`#C9C1B7`
+
+Border
+
+`#DDD5C8`
+
+Shadow
+
+`rgba(0,0,0,0.08)`
+
+---
+
+# Typography
+
+## Logo
+
+Font
+
+Arsenal
+
+Usage
+
+- Splash Screen
+- Welcome Screen
+- Branding
+
+---
+
+## Headings
+
+Font
+
+Manrope
+
+Weights
+
+- 600
+- 700
+- 800
+
+Usage
+
+- Screen titles
+- Section headers
+- Important labels
+
+---
+
+## Body Text
+
+Font
+
+Inter
+
+Weights
+
+- 400
+- 500
+- 600
+- 700
+
+Usage
+
+- Paragraphs
+- Product information
+- Buttons
+- Forms
+- Navigation
+
+---
+
+# Typography Scale
+
+| Style | Size |
+|--------|------|
+| Display | 36 |
+| H1 | 36 |
+| H2 | 28 |
+| H3 | 22 |
+| Title | 18 |
+| Body | 16 |
+| Small Body | 14 |
+| Caption | 12 |
+
+---
+
+# Border Radius
+
+The UI intentionally avoids rounded, playful interfaces.
+
+| Size | Value |
+|-------|------|
+| XS | 4 |
+| SM | 6 |
+| MD | 8 |
+| LG | 12 |
+| XL | 16 |
+
+### Usage
+
+Buttons
+
+`6`
+
+Cards
+
+`8`
+
+Inputs
+
+`6`
+
+Images
+
+`8`
+
+Product Cards
+
+`8`
+
+Modal
+
+`12`
+
+Avoid pill-shaped components except where absolutely necessary.
+
+---
+
+# Spacing System
+
+Use an 8-point grid.
+
+| Token | Value |
+|--------|------|
+| XS | 4 |
+| SM | 8 |
+| MD | 16 |
+| LG | 24 |
+| XL | 32 |
+| XXL | 48 |
+
+Never use arbitrary spacing values unless required by layout.
+
+---
+
+# Elevation
+
+Use elevation conservatively.
+
+### Cards
+
+```
+Shadow Color
+rgba(0,0,0,0.08)
+
+Offset
+0 2
+
+Radius
+6
+
+Opacity
+1
+```
+
+Large shadows should be avoided.
+
+---
+
+# Buttons
+
+## Primary Button
+
+Background
+
+Primary Brown
+
+Text
+
+White
+
+Border Radius
+
+6
+
+Height
+
+48
+
+Padding Horizontal
+
+24
+
+Shadow
+
+Small
+
+---
+
+## Secondary Button
+
+Background
+
+Transparent
+
+Border
+
+1px Primary
+
+Text
+
+Primary
+
+---
+
+## Text Button
+
+No background
+
+Primary text color
+
+---
+
+# Input Fields
+
+Background
+
+White
+
+Border
+
+1px Border Color
+
+Radius
+
+6
+
+Padding
+
+16
+
+Label above input
+
+Placeholder uses secondary text color.
+
+Error state uses Error Red.
+
+---
+
+# Cards
+
+Background
+
+White
+
+Radius
+
+8
+
+Border
+
+Optional 1px Border
+
+Padding
+
+16
+
+Spacing between cards
+
+16
+
+---
+
+# Product Cards
+
+Include
+
+- Product Image
+- Product Name
+- Category
+- Price
+- Rating
+- Wishlist Icon
+
+Image corners
+
+Radius 8
+
+Use subtle shadows only.
+
+---
+
+# Navigation
+
+## Bottom Tab
+
+Background
+
+White
+
+Active Icon
+
+Primary
+
+Inactive Icon
+
+Secondary Text
+
+Height
+
+60
+
+---
+
+## Drawer
+
+Simple white background.
+
+Minimal icons.
+
+Clear typography.
+
+No gradients.
+
+---
+
+# Icons
+
+Use
+
+Material Community Icons
+
+or
+
+Lucide Icons
+
+Icon Size
+
+24
+
+Small Icons
+
+20
+
+Large Icons
+
+28
+
+---
+
+# Images
+
+Product images should
+
+- Maintain aspect ratio
+- Use white cards
+- Never stretch
+- Prefer square thumbnails
+
+Profile images
+
+Radius
+
+8
+
+---
+
+# Lists
+
+Vertical spacing
+
+16
+
+Horizontal padding
+
+16
+
+Dividers
+
+Optional
+
+Very subtle
+
+---
+
+# Animations
+
+Animations should be subtle.
+
+Allowed
+
+- Fade
+- Scale (0.98 press effect)
+- Slide
+- Loading shimmer
+
+Avoid
+
+- Bounce
+- Overshoot
+- Elastic
+- Excessive motion
+
+---
+
+# Component Rules
+
+## Buttons
+
+- Height 48
+- Radius 6
+- Bold text
+
+## Inputs
+
+- Height 48
+- Radius 6
+
+## Cards
+
+- Radius 8
+
+## Product Images
+
+- Radius 8
+
+## Floating Action Button
+
+Avoid unless required.
+
+---
+
+# Screen Layout
+
+Every screen should follow
+
+```
+SafeAreaView
+
+↓
+
+Header
+
+↓
+
+Main Content
+
+↓
+
+Bottom Navigation
+```
+
+Horizontal padding
+
+16
+
+Vertical spacing
+
+24
+
+Maximum consistency across every screen.
+
+---
+
+# General Guidelines
+
+Do
+
+- Use whitespace generously
+- Keep layouts symmetrical
+- Maintain consistent spacing
+- Use typography for hierarchy
+- Prefer simple shapes
+- Keep interfaces calm and uncluttered
+
+Avoid
+
+- Large rounded corners
+- Bright saturated colors
+- Heavy gradients
+- Excessive shadows
+- Inconsistent spacing
+- Decorative UI elements
+- More than one accent color on a screen
+
+---
+
+# Overall Experience
+
+The final application should feel like a premium retail application with understated elegance. Products remain the primary focus, while the interface quietly supports browsing, purchasing, and account management without distracting the user.

@@ -1,26 +1,27 @@
 import axios from "axios";
 
-// Express auth server 
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
+// Express auth server
+const API_URL = process.env.EXPO_PUBLIC_AUTH_API;
 
 console.log("HITTING BACKEND");
+
 export const login = async (email, password) => {
     console.log("HIT LOGIN API");
+
     const res = await axios.post(`${API_URL}/auth/login`, {
         email,
-        password
+        password,
     });
 
-     console.log("RAW RESPONSE:", res.data);
+    console.log("RAW RESPONSE:", res.data);
 
-    // response: { token, user }
     return {
         token: res.data.token,
         user: {
             id: res.data.user.id,
             email: res.data.user.email,
-            name: res.data.user.name
-        }
+            name: res.data.user.name,
+        },
     };
 };
 
@@ -28,10 +29,11 @@ export const register = async (name, email, password) => {
     const res = await axios.post(`${API_URL}/auth/register`, {
         name,
         email,
-        password
+        password,
     });
+
     return {
-        message: res.data.message
+        message: res.data.message,
     };
 };
 
