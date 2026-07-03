@@ -11,14 +11,13 @@ import SearchResultScreen from '../screens/Home/SearchResultScreen';
 //CART - CHECKOUT
 import CheckoutScreen from '../screens/Cart/CheckoutScreen';
 import AddressSelectionScreen from '../screens/Cart/AddressSelectionScreen';
-import PaymenScreen from '../screens/Cart/PaymenScreen';
+import PaymentScreen from '../screens/Cart/PaymentScreen';
 import OrderConfirmationScreen from '../screens/Cart/OrderConfirmationScreen';
 
 //ORDERS
 import OrderHistoryScreen from '../screens/Orders/OrderHistoryScreen';
 
 //PROFILE
-import ImagePickerScreen from '../screens/Profile/ImagePickerScreen';
 
 //SCANNER
 import QRScanner from '../screens/Scanner/QRScanner';
@@ -38,7 +37,7 @@ export default function AppStack() {
 
         {/* Checkout */}
         <Stack.Screen name='Address Selection' component={AddressSelectionScreen}/>
-        <Stack.Screen name='Payment' component={PaymenScreen}/>
+        <Stack.Screen name='Payment' component={PaymentScreen}/>
         <Stack.Screen name='Order' component={OrderConfirmationScreen} />
 
         {/* Orders */}
@@ -46,7 +45,6 @@ export default function AppStack() {
 
         {/* Device Features */}
         <Stack.Screen name='QR Scanner' component={QRScanner}/>
-        <Stack.Screen name='Image Picker' component={ImagePickerScreen}/>
     </Stack.Navigator>
   )
 }

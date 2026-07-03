@@ -33,11 +33,16 @@ export default function LoginScreen({ navigation }) {
             }
  
             Alert.alert("Success", "Login successful");
-            navigation.replace("AppDrawer");
+            navigation.replace("App");
             console.log("LOGIN SUCCESSFUL");
         } catch (err) {
-            Alert.alert("Login Failed", err.message);
-        } finally {
+    console.log("LOGIN ERROR:", err);
+    console.log("MESSAGE:", err.message);
+    console.log("RESPONSE:", err.response);
+    console.log("REQUEST:", err.request);
+
+    Alert.alert("Login Failed", err.message);
+} finally {
             setLoading(false);
         }
     };

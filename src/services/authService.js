@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Express auth server
 const API_URL = process.env.EXPO_PUBLIC_AUTH_API;
-
+console.log("AUTH API:", API_URL);
 console.log("HITTING BACKEND");
 
 export const login = async (email, password) => {
