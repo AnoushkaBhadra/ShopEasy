@@ -273,3 +273,51 @@ http://<YOUR_IP>:3000
 - External API used for product catalog (e.g., Fake Store API)
 - Backend may be simulated using JSON Server
 - Image uploads are optional and handled via device camera
+
+
+## Backend Configuration
+
+### 1. Create a `.env` file
+
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+EXPO_PUBLIC_API_URL=http://YOUR_LOCAL_IP:5000
+```
+
+### 2. Set the backend URL
+
+- Android Emulator:
+
+```env
+EXPO_PUBLIC_API_URL=http://10.0.2.2:5000
+```
+
+- Expo Go (Physical Device):
+
+```env
+EXPO_PUBLIC_API_URL=http://<YOUR_LOCAL_IP>:5000
+```
+
+Replace `<YOUR_LOCAL_IP>` with your computer's IPv4 address.
+
+### 3. Restart Expo
+
+```bash
+npx expo start -c
+```
+
+### 4. Start the backend
+
+```bash
+cd backend
+npm start
+```
+
+### 5. Start JSON Server
+
+```bash
+npx json-server backend/db.json --port 3000
+```
