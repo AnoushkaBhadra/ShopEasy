@@ -7,7 +7,7 @@ import TYPOGRAPHY from "../../theme/typography";
 import { SPACING } from "../../theme/spacing";
 
 export default function HomeHeader({
-    onProfilePress,
+    onProfilePress, onCartPress,
 }) {
     return (
         <View style={styles.container}>
@@ -18,19 +18,35 @@ export default function HomeHeader({
                 </Text>
             </View>
 
-            <Pressable
-                onPress={onProfilePress}
-                style={({ pressed }) => [
-                    styles.profileButton,
-                    pressed && styles.pressed,
-                ]}
-            >
-                <Feather
-                    name="user"
-                    size={22}
-                    color={COLORS.text}
-                />
-            </Pressable>
+            <View style={styles.actions}>
+        <Pressable
+            onPress={onCartPress}
+            style={({ pressed }) => [
+                styles.iconButton,
+                pressed && styles.pressed,
+            ]}
+        >
+            <Feather
+                name="shopping-cart"
+                size={22}
+                color={COLORS.text}
+            />
+        </Pressable>
+
+        <Pressable
+            onPress={onProfilePress}
+            style={({ pressed }) => [
+                styles.iconButton,
+                pressed && styles.pressed,
+            ]}
+        >
+            <Feather
+                name="user"
+                size={22}
+                color={COLORS.text}
+            />
+        </Pressable>
+</View>
         </View>
     );
 }

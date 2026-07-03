@@ -78,6 +78,7 @@ export default function HomeScreen() {
         <SafeAreaView style={styles.container}>
             <HomeHeader
                 onProfilePress={() => navigation.navigate("Profile")}
+                onCartPress={() => navigation.navigate("Cart")}
             />
 
             <SearchBar
