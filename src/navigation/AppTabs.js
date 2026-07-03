@@ -8,7 +8,7 @@ import CartScreen from "../screens/Cart/CartScreen";
 import ProfileScreen from "../screens/Profile/ProfileScreen";
 
 
-import { COLORS } from "../themes/colors";
+import { COLORS } from "../theme/colors";
 
 const Tab = createBottomTabNavigator();
 

@@ -2,8 +2,8 @@ export const FONT_FAMILY = {
   logo: "Arsenal-Regular",
   logoBold: "Arsenal-Bold",
 
-  heading: "Manrope_700Bold",
-  headingSemi: "Manrope_600SemiBold",
+  heading: "EBGaramond_700Bold",
+  headingSemi: "EBGaramond_600SemiBold",
 
   body: "Inter_400Regular",
   medium: "Inter_500Medium",
@@ -16,9 +16,9 @@ export const FONT_SIZE = {
   sm: 14,
   md: 16,
   lg: 18,
-  xl: 22,
-  xxl: 28,
-  display: 36,
+  xl: 24,
+  xxl: 32,
+  display: 44,
 };
 
 export const LINE_HEIGHT = {
@@ -27,15 +27,15 @@ export const LINE_HEIGHT = {
   md: 24,
   lg: 28,
   xl: 32,
-  xxl: 38,
-  display: 44,
+  xxl: 40,
+  display: 52,
 };
 
 export const LETTER_SPACING = {
-  tight: -0.5,
+  tight: -0.4,
   normal: 0,
-  wide: 0.5,
-  widest: 1,
+  wide: 0.3,
+  widest: 0.8,
 };
 
 const TYPOGRAPHY = {
@@ -49,12 +49,14 @@ const TYPOGRAPHY = {
     fontFamily: FONT_FAMILY.heading,
     fontSize: FONT_SIZE.display,
     lineHeight: LINE_HEIGHT.display,
+    letterSpacing: LETTER_SPACING.tight,
   },
 
   h2: {
-    fontFamily: FONT_FAMILY.headingSemi,
+    fontFamily: FONT_FAMILY.heading,
     fontSize: FONT_SIZE.xxl,
     lineHeight: LINE_HEIGHT.xxl,
+    letterSpacing: LETTER_SPACING.tight,
   },
 
   h3: {
@@ -91,7 +93,13 @@ const TYPOGRAPHY = {
   button: {
     fontFamily: FONT_FAMILY.semiBold,
     fontSize: FONT_SIZE.md,
-    letterSpacing: 0.3,
+    letterSpacing: LETTER_SPACING.normal,
+  },
+
+  label: {
+    fontFamily: FONT_FAMILY.medium,
+    fontSize: FONT_SIZE.sm,
+    lineHeight: LINE_HEIGHT.sm,
   },
 
   price: {

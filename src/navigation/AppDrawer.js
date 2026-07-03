@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import AppStack from "./AppStack";
 import OrderHistoryScreen from "../screens/Orders/OrderHistoryScreen";
 import SavedAddressScreen from "../screens/Address/SavedAddressScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import SettingsScreen from "../screens/Settings/SettingsScreen";
 import HelpScreen from "../screens/Support/HelpScreen";
 
 const Drawer= createDrawerNavigator();
