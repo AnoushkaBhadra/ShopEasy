@@ -7,8 +7,13 @@ const html = `
 <html>
 
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<meta charset="utf-8"/>
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
 
 <link
 rel="stylesheet"
@@ -16,11 +21,15 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 />
 
 <style>
-html, body, #map {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+
+html,
+body,
+#map{
+    height:100%;
+    margin:0;
+    padding:0;
 }
+
 </style>
 
 </head>
@@ -33,19 +42,19 @@ html, body, #map {
 
 <script>
 
-var map = L.map("map").setView([22.5726, 88.3639], 13);
+var map = L.map("map").setView([22.5726,88.3639],13);
 
 L.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  {
-    maxZoom: 19,
-    attribution: "© OpenStreetMap"
-  }
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{
+    maxZoom:19,
+    attribution:"© OpenStreetMap"
+}
 ).addTo(map);
 
 var marker = null;
 
-map.on("click", function(e){
+map.on("click",function(e){
 
     if(marker){
         map.removeLayer(marker);
@@ -65,8 +74,8 @@ map.on("click", function(e){
 
     window.ReactNativeWebView.postMessage(
         JSON.stringify({
-            latitude: e.latlng.lat,
-            longitude: e.latlng.lng
+            latitude:e.latlng.lat,
+            longitude:e.latlng.lng
         })
     );
 
@@ -80,27 +89,30 @@ map.on("click", function(e){
 
 export default function MapPicker({ onLocationSelected }) {
 
-  const handleMessage = (event) => {
+    function handleMessage(event){
 
-    const coords = JSON.parse(event.nativeEvent.data);
+        const coords = JSON.parse(event.nativeEvent.data);
 
-    if (onLocationSelected) {
-      onLocationSelected(coords);
+        if(onLocationSelected){
+            onLocationSelected(coords);
+        }
+
     }
 
-  };
+    return(
+        <View style={{flex:1}}>
 
-  return (
-    <View style={{ flex: 1 }}>
-      <WebView
-        originWhitelist={["*"]}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        mixedContentMode="always"
-        source={{ html }}
-        style={{ flex: 1 }}
-        onMessage={handleMessage}
-      />
-    </View>
-  );
+            <WebView
+                originWhitelist={["*"]}
+                javaScriptEnabled
+                domStorageEnabled
+                mixedContentMode="always"
+                source={{html}}
+                style={{flex:1}}
+                onMessage={handleMessage}
+            />
+
+        </View>
+    );
+
 }
