@@ -33,20 +33,20 @@ export default function AppStack() {
         {/* Bottom Tabs */}
         <Stack.Screen name='AppTabs' component={AppTabs}/>
         {/* Home */}
-        <Stack.Screen name='Product Details' component={ProductDetailsScreen}/>
-        <Stack.Screen name='Search Result' component={SearchResultScreen} />
+        <Stack.Screen name='ProductDetails' component={ProductDetailsScreen}/>
+        <Stack.Screen name='SearchResult' component={SearchResultScreen} />
 
         {/* Checkout */}
-        <Stack.Screen name='Address Selection' component={AddressSelectionScreen}/>
+        <Stack.Screen name='AddressSelection' component={AddressSelectionScreen}/>
         <Stack.Screen name='Payment' component={PaymenScreen}/>
         <Stack.Screen name='Order' component={OrderConfirmationScreen} />
 
         {/* Orders */}
-        <Stack.Screen name='Order History' component={OrderHistoryScreen}/>
+        <Stack.Screen name='OrderHistory' component={OrderHistoryScreen}/>
 
         {/* Device Features */}
-        <Stack.Screen name='QR Scanner' component={QRScanner}/>
-        <Stack.Screen name='Image Picker' component={ImagePickerScreen}/>
+        <Stack.Screen name='QRScanner' component={QRScanner}/>
+        <Stack.Screen name='ImagePicker' component={ImagePickerScreen}/>
     </Stack.Navigator>
   )
 }

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList} from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { ActivityIndicator } from "react-native";
 import { COLORS } from "../../theme/colors";
 import { SPACING } from "../../theme/spacing";
 
@@ -11,70 +11,78 @@ import SearchBar from "../../components/search/SearchBar";
 import CategoryList from "../../components/layout/CategoryList";
 import ProductCard from "../../components/product/ProductCard";
 
-export default function HomeScreen() {
-    const [search, setSearch] = useState("")
+import { getProducts } from "../../api/productApi";
+import { toggleWishlist } from "../../store/slices/wishlistSlice";
+import {setLoading, setProducts,searchProducts,filterProducts,setError} from "../../store/slices/productSlice";
+import { addToCart } from "../../store/slices/cartSlice";
+
+export default function HomeScreen({ navigation }) {
+    const dispatch = useDispatch();
+
+    const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
 
-    const categories = [
-        "All",
-        "Electronics",
-        "Fashion",
-        "Beauty",
-        "Sports",
-        "Books",
-    ];
 
-    const products = [
-        {
-            id: 1,
-            name: "Wireless Headphones",
-            category: "Electronics",
-            price: 12999,
-            rating: 4.8,
-            liked: false,
-            image: "https://picsum.photos/400?1",
-        },
-        {
-            id: 2,
-            name: "Smart Watch",
-            category: "Electronics",
-            price: 8999,
-            rating: 4.6,
-            liked: false,
-            image: "https://picsum.photos/400?2",
-        },
-        {
-            id: 3,
-            name: "Leather Backpack",
-            category: "Fashion",
-            price: 3499,
-            rating: 4.4,
-            liked: false,
-            image: "https://picsum.photos/400?3",
-        },
-        {
-            id: 4,
-            name: "Coffee Mug",
-            category: "Home",
-            price: 499,
-            rating: 4.9,
-            liked: false,
-            image: "https://picsum.photos/400?4",
-        },
-    ];
+    const { products, filteredProducts, loading, error } = useSelector(
+        (state) => state.products
+    );
+    console.log(useSelector(state => state.products));
 
-    const filteredProducts = products.filter((product) => {
-        const matchesSearch = product.name
-            .toLowerCase()
-            .includes(search.toLowerCase());
+    const wishlist = useSelector(state => state.wishlist.items);
 
-        const matchesCategory =
-            selectedCategory === "All" ||
-            product.category === selectedCategory;
+    const categories = [ "All", ...new Set(products.map((product)=> product.category))]; 
+    useEffect(() => {
+        const fetchProducts = async () => {
+            dispatch(setLoading(true));
+            console.log("Fetching products...");
+            console.time("Fetch products");
 
-        return matchesSearch && matchesCategory;
-    });
-   return (
+            try {
+                const products = await getProducts();
+                console.timeEnd("Fetch Products");
+                console.log("Products received:", products.length);
+
+                dispatch(setProducts(products));
+            } catch (err) {
+                dispatch(setError(err.message));
+            }
+        };
+
+        fetchProducts();
+    }, [dispatch]);
+
+    const handleSearch = (text) => {
+        setSearch(text);
+        dispatch(searchProducts(text));
+    };
+
+    console.log("Categories:", categories);
+    const handleCategory = (category) => {
+        setSelectedCategory(category);
+        dispatch(filterProducts(category));
+    };
+
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product));
+    };
+
+    if (loading) {
+        return (
+            <SafeAreaView style={styles.loadingContainer}>
+                <ActivityIndicator size="large" />
+            </SafeAreaView>
+        );
+    }
+
+    if (error) {
+        return (
+            <SafeAreaView style={styles.loadingContainer}>
+                <Text>{error}</Text>
+            </SafeAreaView>
+        );
+    }
+
+    return (
         <SafeAreaView style={styles.container}>
             <HomeHeader
                 onProfilePress={() => navigation.navigate("Profile")}
@@ -83,36 +91,41 @@ export default function HomeScreen() {
 
             <SearchBar
                 value={search}
-                onChangeText={setSearch}
+                onChangeText={handleSearch}
             />
-
+            <View>
             <CategoryList
                 categories={categories}
                 selected={selectedCategory}
-                onSelect={setSelectedCategory}
+                onSelect={handleCategory}
             />
-
+            </View>
+            
             <FlatList
+                
                 data={filteredProducts}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <ProductCard
-                        product={item}
-                        onPress={(product) =>
-                            navigation.navigate("ProductDetails", { product })
-                        }
-                        onWishlist={(product) =>
-                            console.log("Wishlist:", product.id)
-                        }
-                    />
-                )}
                 numColumns={2}
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}
+                renderItem={({ item }) => (
+                    <ProductCard
+                        product={item}
+                        isLiked={wishlist.some(product => product.id === item.id)}
+                        onPress={() =>
+                            navigation.navigate("ProductDetails", {
+                                product: item,
+                            })
+                        }
+                        onWishlist={(product) => dispatch(toggleWishlist(product))}
+                        onAddToCart={() => handleAddToCart(item)}
+                    />
+                )}
             />
         </SafeAreaView>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
