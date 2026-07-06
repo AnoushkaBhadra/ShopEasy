@@ -49,9 +49,13 @@ export default function AppStack() {
 
       {/* Orders */}
       <Stack.Screen name="Order History" component={OrderHistoryScreen} />
+      <Stack.Screen name="Saved Addresses" component={SavedAddressScreen} />
 
+      <Stack.Screen name="AddressForm" component={AddressFormScreen} />
+
+      <Stack.Screen name="MapSelection" component={MapSelectionScreen} />
       {/* Device Features */}
-      <Stack.Screen name="QR Scanner" component={QRScanner} />
+      {/* <Stack.Screen name="QR Scanner" component={QRScanner} /> */}
     </Stack.Navigator>
   );
 }

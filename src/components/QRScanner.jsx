@@ -21,10 +21,7 @@ export default function QRScanner({ onQRScanned }) {
   if (!permission.granted) {
     return (
       <View style={{ paddingTop: 50 }}>
-        <Button
-          title="Grant Camera Permission"
-          onPress={requestPermission}
-        />
+        <Button title="Grant Camera Permission" onPress={requestPermission} />
       </View>
     );
   }
@@ -32,7 +29,10 @@ export default function QRScanner({ onQRScanned }) {
   if (showCamera) {
     return (
       <CameraView
-        style={{ flex: 1 }}
+        style={{
+          width: "100%",
+          height: 350,
+        }}
         barcodeScannerSettings={{
           barcodeTypes: ["qr"],
         }}
@@ -43,10 +43,7 @@ export default function QRScanner({ onQRScanned }) {
 
   return (
     <View style={{ paddingTop: 50 }}>
-      <Button
-        title="Scan QR"
-        onPress={() => setShowCamera(true)}
-      />
+      <Button title="Scan QR" onPress={() => setShowCamera(true)} />
     </View>
   );
 }

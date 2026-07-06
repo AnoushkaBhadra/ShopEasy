@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Button, Alert } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Button,
+  Alert,
+  Pressable,
+} from "react-native";
 
 import { getUser } from "../../utils/authStorage";
-import { getAddresses, deleteAddress } from "../../services/addressService";
+import {
+  getAddresses,
+  deleteAddress,
+} from "../../services/addressService";
 
-export default function SavedAddressScreen({ navigation }) {
+export default function SavedAddressScreen({
+  navigation,
+  route,
+}) {
+  const selectionMode = route.params?.selectionMode || false;
+
   const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     loadAddresses();
@@ -15,13 +31,21 @@ export default function SavedAddressScreen({ navigation }) {
     try {
       const user = await getUser();
 
-      if (!user) {
-        return;
-      }
+      if (!user) return;
 
       const data = await getAddresses(user.id);
 
       setAddresses(data);
+
+      if (selectionMode) {
+        const defaultAddress = data.find(
+          (item) => item.isDefault
+        );
+
+        if (defaultAddress) {
+          setSelectedAddress(defaultAddress);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -42,22 +66,30 @@ export default function SavedAddressScreen({ navigation }) {
           onPress: async () => {
             try {
               await deleteAddress(id);
-
               loadAddresses();
             } catch (error) {
               console.log(error);
             }
           },
         },
-      ],
+      ]
     );
   }
 
   function renderItem({ item }) {
+    const selected =
+      selectedAddress?.id === item.id;
+
     return (
-      <View
+      <Pressable
+        onPress={() => {
+          if (selectionMode) {
+            setSelectedAddress(item);
+          }
+        }}
         style={{
-          borderWidth: 1,
+          borderWidth: selected ? 2 : 1,
+          borderColor: selected ? "blue" : "black",
           padding: 10,
           marginBottom: 15,
         }}
@@ -78,23 +110,35 @@ export default function SavedAddressScreen({ navigation }) {
 
         <Text>Longitude : {item.longitude}</Text>
 
-        <Text>Default :{item.isDefault ? " Yes" : " No"}</Text>
+        <Text>
+          Default :
+          {item.isDefault ? " Yes" : " No"}
+        </Text>
 
-        <View style={{ marginTop: 10 }} />
+        {!selectionMode && (
+          <>
+            <View style={{ marginTop: 10 }} />
 
-        <Button
-          title="Edit"
-          onPress={() =>
-            navigation.navigate("AddressForm", {
-              addressId: item.id,
-            })
-          }
-        />
+            <Button
+              title="Edit"
+              onPress={() =>
+                navigation.navigate("AddressForm", {
+                  addressId: item.id,
+                })
+              }
+            />
 
-        <View style={{ height: 10 }} />
+            <View style={{ height: 10 }} />
 
-        <Button title="Delete" onPress={() => handleDelete(item.id)} />
-      </View>
+            <Button
+              title="Delete"
+              onPress={() =>
+                handleDelete(item.id)
+              }
+            />
+          </>
+        )}
+      </Pressable>
     );
   }
 
@@ -108,16 +152,34 @@ export default function SavedAddressScreen({ navigation }) {
     >
       <Button
         title="Add Address"
-        onPress={() => navigation.navigate("AddressForm")}
+        onPress={() =>
+          navigation.navigate("AddressForm")
+        }
       />
 
       <View style={{ height: 20 }} />
 
       <FlatList
         data={addresses}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) =>
+          item.id.toString()
+        }
         renderItem={renderItem}
       />
+
+      {selectionMode && (
+        <>
+          <Button
+            title="Proceed to Payment"
+            disabled={!selectedAddress}
+            onPress={() =>
+              navigation.navigate("Payment", {
+                selectedAddress,
+              })
+            }
+          />
+        </>
+      )}
     </View>
   );
 }
