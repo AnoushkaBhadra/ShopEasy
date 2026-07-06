@@ -7,8 +7,8 @@ import {
   Alert,
   Pressable,
 } from "react-native";
+import { useSelector } from "react-redux";
 
-import { getUser } from "../../utils/authStorage";
 import {
   getAddresses,
   deleteAddress,
@@ -20,17 +20,17 @@ export default function SavedAddressScreen({
 }) {
   const selectionMode = route.params?.selectionMode || false;
 
+  const user = useSelector((state) => state.auth.user);
+
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     loadAddresses();
-  }, []);
+  }, [user]);
 
   async function loadAddresses() {
     try {
-      const user = await getUser();
-
       if (!user) return;
 
       const data = await getAddresses(user.id);
@@ -168,17 +168,15 @@ export default function SavedAddressScreen({
       />
 
       {selectionMode && (
-        <>
-          <Button
-            title="Proceed to Payment"
-            disabled={!selectedAddress}
-            onPress={() =>
-              navigation.navigate("Payment", {
-                selectedAddress,
-              })
-            }
-          />
-        </>
+        <Button
+          title="Proceed to Payment"
+          disabled={!selectedAddress}
+          onPress={() =>
+            navigation.navigate("Payment", {
+              selectedAddress,
+            })
+          }
+        />
       )}
     </View>
   );

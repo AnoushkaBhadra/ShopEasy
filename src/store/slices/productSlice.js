@@ -29,7 +29,7 @@ const productSlice = createSlice({
             state.search = action.payload;
 
             state.filteredProducts = state.products.filter(product =>
-                product.title.toLowerCase().includes(searchText)
+                product.name.toLowerCase().includes(searchText)
             );
         },
 

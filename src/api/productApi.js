@@ -1,7 +1,9 @@
-import axios from "axios"; 
+import axios from "axios";
+
 const API = axios.create({
-    baseURL:  "http://10.0.2.2:3000",
-})
+  baseURL: process.env.EXPO_PUBLIC_JSON_API,
+});
+
 export const getProducts = async () => {
   const response = await API.get("/products");
   return response.data;

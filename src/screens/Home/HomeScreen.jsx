@@ -113,7 +113,7 @@ export default function HomeScreen({ navigation }) {
                         product={item}
                         isLiked={wishlist.some(product => product.id === item.id)}
                         onPress={() =>
-                            navigation.navigate("ProductDetails", {
+                            navigation.navigate("Product Details", {
                                 product: item,
                             })
                         }

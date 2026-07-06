@@ -6,11 +6,23 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+
+import {
+  createOrder,
+  createOrderItems,
+} from "../../services/orderService";
+import { clearCart } from "../../store/slices/cartSlice";
 
 import QRScanner from "../../components/QRScanner";
 
 export default function PaymentScreen({ navigation, route }) {
+  const dispatch = useDispatch();
+
   const selectedAddress = route.params?.selectedAddress;
+
+  const user = useSelector((state) => state.auth.user);
+  const cart = useSelector((state) => state.cart);
 
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const [paymentDone, setPaymentDone] = useState(false);
@@ -20,7 +32,7 @@ export default function PaymentScreen({ navigation, route }) {
     setPaymentDone(true);
   }
 
-  function handlePlaceOrder() {
+  async function handlePlaceOrder() {
     if (paymentMethod === "UPI" && !paymentDone) {
       Alert.alert(
         "Payment Required",
@@ -29,10 +41,48 @@ export default function PaymentScreen({ navigation, route }) {
       return;
     }
 
-    navigation.navigate("Order", {
-      selectedAddress,
-      paymentMethod,
-    });
+    try {
+      // Create Order
+      const orderData = {
+        userId: user.id,
+        addressId: selectedAddress.id,
+        orderDate: new Date().toISOString(),
+        status: "pending",
+        totalAmount: cart.total,
+        paymentMethod,
+        paymentStatus:
+          paymentMethod === "COD"
+            ? "pending"
+            : "completed",
+      };
+
+      const newOrder = await createOrder(orderData);
+
+      // Create Order Items
+      const orderItems = cart.items.map((item) => ({
+        orderId: newOrder.id,
+        productId: item.id,
+        productName: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      }));
+
+      await createOrderItems(orderItems);
+
+      // Clear Redux Cart
+      dispatch(clearCart());
+
+      navigation.navigate("Order Confirmation", {
+  orderId: newOrder.id,
+});
+    } catch (error) {
+      console.log(error);
+
+      Alert.alert(
+        "Order Error",
+        "Unable to place order."
+      );
+    }
   }
 
   return (

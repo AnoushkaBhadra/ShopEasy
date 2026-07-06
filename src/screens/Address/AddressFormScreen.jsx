@@ -9,15 +9,28 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import { getUser } from "../../utils/authStorage";
+import { useSelector, useDispatch } from "react-redux";
+
 import {
   getAddress,
   addAddress,
   updateAddress,
 } from "../../services/addressService";
 
+import {
+  clearLocation,
+} from "../../store/slices/locationSlice";
+
 export default function AddressFormScreen({ navigation, route }) {
+  const dispatch = useDispatch();
+
   const addressId = route.params?.addressId;
+
+  const user = useSelector((state) => state.auth.user);
+
+  const location = useSelector(
+    (state) => state.location
+  );
 
   const [label, setLabel] = useState("");
   const [addressLine, setAddressLine] = useState("");
@@ -30,16 +43,22 @@ export default function AddressFormScreen({ navigation, route }) {
   const [isDefault, setIsDefault] = useState(false);
 
   useEffect(() => {
+    dispatch(clearLocation());
+
     if (addressId) {
       loadAddress();
     }
   }, []);
+
   useEffect(() => {
-    if (route.params?.latitude && route.params?.longitude) {
-      setLatitude(String(route.params.latitude));
-      setLongitude(String(route.params.longitude));
+    if (
+      location.latitude !== null &&
+      location.longitude !== null
+    ) {
+      setLatitude(String(location.latitude));
+      setLongitude(String(location.longitude));
     }
-  }, [route.params]);
+  }, [location]);
 
   async function loadAddress() {
     try {
@@ -61,7 +80,10 @@ export default function AddressFormScreen({ navigation, route }) {
 
   async function handleSave() {
     try {
-      const user = await getUser();
+      if (!user) {
+        Alert.alert("Error", "User not found.");
+        return;
+      }
 
       const addressData = {
         userId: user.id,
@@ -85,6 +107,8 @@ export default function AddressFormScreen({ navigation, route }) {
 
         Alert.alert("Success", "Address added.");
       }
+
+      dispatch(clearLocation());
 
       navigation.goBack();
     } catch (error) {
@@ -110,7 +134,11 @@ export default function AddressFormScreen({ navigation, route }) {
         <TextInput
           value={label}
           onChangeText={setLabel}
-          style={{ borderWidth: 1, marginBottom: 15, padding: 8 }}
+          style={{
+            borderWidth: 1,
+            marginBottom: 15,
+            padding: 8,
+          }}
         />
 
         <Text>Address Line</Text>
@@ -118,7 +146,11 @@ export default function AddressFormScreen({ navigation, route }) {
         <TextInput
           value={addressLine}
           onChangeText={setAddressLine}
-          style={{ borderWidth: 1, marginBottom: 15, padding: 8 }}
+          style={{
+            borderWidth: 1,
+            marginBottom: 15,
+            padding: 8,
+          }}
         />
 
         <Text>City</Text>
@@ -126,7 +158,11 @@ export default function AddressFormScreen({ navigation, route }) {
         <TextInput
           value={city}
           onChangeText={setCity}
-          style={{ borderWidth: 1, marginBottom: 15, padding: 8 }}
+          style={{
+            borderWidth: 1,
+            marginBottom: 15,
+            padding: 8,
+          }}
         />
 
         <Text>State</Text>
@@ -134,7 +170,11 @@ export default function AddressFormScreen({ navigation, route }) {
         <TextInput
           value={state}
           onChangeText={setState}
-          style={{ borderWidth: 1, marginBottom: 15, padding: 8 }}
+          style={{
+            borderWidth: 1,
+            marginBottom: 15,
+            padding: 8,
+          }}
         />
 
         <Text>Pincode</Text>
@@ -143,7 +183,11 @@ export default function AddressFormScreen({ navigation, route }) {
           value={pincode}
           onChangeText={setPincode}
           keyboardType="numeric"
-          style={{ borderWidth: 1, marginBottom: 15, padding: 8 }}
+          style={{
+            borderWidth: 1,
+            marginBottom: 15,
+            padding: 8,
+          }}
         />
 
         <Text>Country</Text>
@@ -151,7 +195,11 @@ export default function AddressFormScreen({ navigation, route }) {
         <TextInput
           value={country}
           onChangeText={setCountry}
-          style={{ borderWidth: 1, marginBottom: 15, padding: 8 }}
+          style={{
+            borderWidth: 1,
+            marginBottom: 15,
+            padding: 8,
+          }}
         />
 
         <Text>Latitude</Text>
@@ -159,7 +207,11 @@ export default function AddressFormScreen({ navigation, route }) {
         <TextInput
           value={latitude}
           editable={false}
-          style={{ borderWidth: 1, marginBottom: 15, padding: 8 }}
+          style={{
+            borderWidth: 1,
+            marginBottom: 15,
+            padding: 8,
+          }}
         />
 
         <Text>Longitude</Text>
@@ -167,38 +219,51 @@ export default function AddressFormScreen({ navigation, route }) {
         <TextInput
           value={longitude}
           editable={false}
-          style={{ borderWidth: 1, marginBottom: 20, padding: 8 }}
+          style={{
+            borderWidth: 1,
+            marginBottom: 20,
+            padding: 8,
+          }}
         />
 
         <Button
           title="Pick Location on Map"
           onPress={() =>
-            navigation.navigate("MapSelection", {
-              onLocationSelected: (coords) => {
-                setLatitude(String(coords.latitude));
-                setLongitude(String(coords.longitude));
-              },
-            })
+            navigation.navigate("MapSelection")
           }
         />
 
         <View style={{ height: 15 }} />
 
         <Button
-          title={addressId ? "Update Address" : "Save Address"}
+          title={
+            addressId
+              ? "Update Address"
+              : "Save Address"
+          }
           onPress={handleSave}
         />
 
         <View style={{ height: 10 }} />
 
         <Button
-          title={isDefault ? "Default Address" : "Set as Default"}
+          title={
+            isDefault
+              ? "Default Address"
+              : "Set as Default"
+          }
           onPress={() => setIsDefault(!isDefault)}
         />
 
         <View style={{ height: 10 }} />
 
-        <Button title="Cancel" onPress={() => navigation.goBack()} />
+        <Button
+          title="Cancel"
+          onPress={() => {
+            dispatch(clearLocation());
+            navigation.goBack();
+          }}
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );

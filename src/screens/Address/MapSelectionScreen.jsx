@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { View, Text, Button } from "react-native";
 
 import MapPicker from "../../components/MapPicker";
+import { useDispatch } from "react-redux";
+import { setLocation } from "../../store/slices/locationSlice";
 
-export default function MapSelectionScreen({ navigation, route }) {
+export default function MapSelectionScreen({ navigation }) {
+  const dispatch = useDispatch();
+
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   function handleLocationSelected(coords) {
@@ -15,18 +19,19 @@ export default function MapSelectionScreen({ navigation, route }) {
       return;
     }
 
-    if (route.params?.onLocationSelected) {
-      route.params.onLocationSelected(selectedLocation);
-    }
+    dispatch(
+      setLocation({
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude,
+      })
+    );
 
     navigation.goBack();
   }
 
   return (
     <View style={{ flex: 1 }}>
-      <MapPicker
-        onLocationSelected={handleLocationSelected}
-      />
+      <MapPicker onLocationSelected={handleLocationSelected} />
 
       {selectedLocation && (
         <View style={{ padding: 15 }}>
