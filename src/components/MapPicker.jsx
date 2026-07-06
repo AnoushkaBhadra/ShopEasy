@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 
 const html = `
@@ -100,7 +100,7 @@ export default function MapPicker({ onLocationSelected }) {
     }
 
     return(
-        <View style={{flex:1}}>
+        <View style={styles.container}>
 
             <WebView
                 originWhitelist={["*"]}
@@ -108,7 +108,7 @@ export default function MapPicker({ onLocationSelected }) {
                 domStorageEnabled
                 mixedContentMode="always"
                 source={{html}}
-                style={{flex:1}}
+                style={styles.container}
                 onMessage={handleMessage}
             />
 
@@ -116,3 +116,9 @@ export default function MapPicker({ onLocationSelected }) {
     );
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+});

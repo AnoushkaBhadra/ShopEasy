@@ -6,6 +6,11 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
+import { COLORS } from "../../theme/colors";
+import TYPOGRAPHY from "../../theme/typography";
+import { SPACING } from "../../theme/spacing";
+import { SHADOW } from "../../theme/shadows";
+import { RADIUS } from "../../theme/radius";
 
 export default function HelpScreen() {
   const [faq1, setFaq1] = useState(false);
@@ -16,7 +21,7 @@ export default function HelpScreen() {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 30 }}
+      contentContainerStyle={styles.content}
     >
       <Text style={styles.heading}>Help & Support</Text>
 
@@ -94,13 +99,13 @@ export default function HelpScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Contact Us</Text>
 
-        <Text>Email</Text>
-        <Text>support@shopeasy.com</Text>
+        <Text style={styles.metaLabel}>Email</Text>
+        <Text style={styles.metaValue}>support@shopeasy.com</Text>
 
-        <View style={{ height: 15 }} />
+        <View style={styles.spacer} />
 
-        <Text>Phone</Text>
-        <Text>+91 9876543210</Text>
+        <Text style={styles.metaLabel}>Phone</Text>
+        <Text style={styles.metaValue}>+91 9876543210</Text>
       </View>
 
       <View style={styles.section}>
@@ -108,15 +113,15 @@ export default function HelpScreen() {
           Working Hours
         </Text>
 
-        <Text>Monday - Saturday</Text>
-        <Text>9:00 AM - 7:00 PM</Text>
+        <Text style={styles.metaLabel}>Monday - Saturday</Text>
+        <Text style={styles.metaValue}>9:00 AM - 7:00 PM</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>About</Text>
 
-        <Text>ShopEasy v1.0</Text>
-        <Text>© 2026 ShopEasy</Text>
+        <Text style={styles.metaLabel}>ShopEasy v1.0</Text>
+        <Text style={styles.metaValue}>© 2026 ShopEasy</Text>
       </View>
     </ScrollView>
   );
@@ -125,40 +130,70 @@ export default function HelpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    paddingTop: 50,
+    backgroundColor: COLORS.background,
+  },
+
+  content: {
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.xxl,
+    paddingBottom: SPACING.xxl,
   },
 
   heading: {
-    fontSize: 26,
-    fontWeight: "bold",
-    marginBottom: 25,
+    ...TYPOGRAPHY.h2,
+    color: COLORS.text,
+    marginBottom: SPACING.lg,
   },
 
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 15,
-    marginTop: 15,
+    ...TYPOGRAPHY.h3,
+    color: COLORS.text,
+    marginBottom: SPACING.md,
+    marginTop: SPACING.md,
   },
 
   card: {
     borderWidth: 1,
-    padding: 12,
-    marginBottom: 12,
+    borderColor: COLORS.border,
+    borderRadius: RADIUS.md,
+    padding: SPACING.md,
+    marginBottom: SPACING.sm,
+    backgroundColor: COLORS.surface,
+    ...SHADOW.card,
   },
 
   question: {
-    fontSize: 16,
-    fontWeight: "600",
+    ...TYPOGRAPHY.title,
+    color: COLORS.text,
   },
 
   answer: {
-    marginTop: 10,
-    lineHeight: 22,
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+    marginTop: SPACING.sm,
   },
 
   section: {
-    marginTop: 25,
+    marginTop: SPACING.lg,
+    padding: SPACING.lg,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: RADIUS.lg,
+    backgroundColor: COLORS.surface,
+  },
+
+  metaLabel: {
+    ...TYPOGRAPHY.label,
+    color: COLORS.text,
+  },
+
+  metaValue: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+    marginTop: SPACING.xxs,
+  },
+
+  spacer: {
+    height: SPACING.md,
   },
 });

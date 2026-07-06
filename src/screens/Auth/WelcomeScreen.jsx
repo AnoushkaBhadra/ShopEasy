@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Button, Pressable } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { COLORS } from "../../theme/colors";
 import { RADIUS } from "../../theme/radius";
 import TYPOGRAPHY from "../../theme/typography";

@@ -9,6 +9,7 @@ import ProfileScreen from "../screens/Profile/ProfileScreen";
 import WishlistScreen from "../screens/Wishlist/WishlistScreen";
 
 import { COLORS } from "../theme/colors";
+import TYPOGRAPHY from "../theme/typography";
 
 const Tab = createBottomTabNavigator();
 
@@ -69,8 +70,7 @@ const styles = StyleSheet.create({
     },
 
     tabLabel: {
-        fontSize: 12,
-        fontWeight: "600",
+        ...TYPOGRAPHY.caption,
         marginBottom: 2,
     },
 });

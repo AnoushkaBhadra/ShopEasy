@@ -1,6 +1,10 @@
 import React from "react";
-import { View, Button } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { COLORS } from "../theme/colors";
+import TYPOGRAPHY from "../theme/typography";
+import { SPACING } from "../theme/spacing";
+import { RADIUS } from "../theme/radius";
 
 export default function ImagePickerComponent({ onImageSelected }) {
   async function pickImage() {
@@ -25,12 +29,39 @@ export default function ImagePickerComponent({ onImageSelected }) {
   }
 
   return (
-    <View style={{ paddingTop: 50 }}>
-      <Button
-        title="Pick Image"
+    <View style={styles.container}>
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          pressed && styles.pressed,
+        ]}
         onPress={pickImage}
-      />
+      >
+        <Text style={styles.buttonText}>Pick Image</Text>
+      </Pressable>
     </View>
   );
 
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: SPACING.lg,
+  },
+  button: {
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.surface,
+  },
+  buttonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.primary,
+  },
+  pressed: {
+    opacity: 0.7,
+  },
+});

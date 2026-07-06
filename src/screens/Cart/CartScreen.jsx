@@ -21,6 +21,7 @@ import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
 import { SPACING } from "../../theme/spacing";
 import { SHADOW } from "../../theme/shadows";
+import { RADIUS } from "../../theme/radius";
 
 export default function CartScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -147,6 +148,8 @@ const styles = StyleSheet.create({
   summary: {
     borderTopWidth: 1,
     borderColor: COLORS.border,
+    borderTopLeftRadius: RADIUS.lg,
+    borderTopRightRadius: RADIUS.lg,
     backgroundColor: COLORS.surface,
     paddingVertical: SPACING.lg,
     paddingHorizontal: SPACING.md,
@@ -191,6 +194,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: RADIUS.md,
     ...SHADOW.button,
   },
 

@@ -8,6 +8,7 @@ import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
 import { SPACING } from "../../theme/spacing";
 import { SHADOW } from "../../theme/shadows";
+import { RADIUS } from "../../theme/radius";
 
 export default function CartItem({item, onIncrease, onDecrease, onRemove}) {
     return (
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.surface,
         borderWidth: 1,
         borderColor: COLORS.border,
+        borderRadius: RADIUS.lg,
         padding: SPACING.md,
         marginBottom: SPACING.md,
         ...SHADOW.card,
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
         height: 90,
         resizeMode: "contain",
         backgroundColor: COLORS.background,
+        borderRadius: RADIUS.md,
     },
 
     details: {
@@ -118,6 +121,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: COLORS.surface,
+        borderRadius: RADIUS.sm,
     },
 
     quantity: {

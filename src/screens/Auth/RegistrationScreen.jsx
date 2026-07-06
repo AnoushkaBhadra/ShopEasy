@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { View, Text, Button, Alert, TextInput, Pressable, KeyboardAvoidingView, StyleSheet} from "react-native";
+import { View, Text, Alert, TextInput, Pressable, KeyboardAvoidingView, StyleSheet} from "react-native";
 
 import { saveAuthData, getToken } from "../../utils/authStorage";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -49,8 +49,8 @@ export default function RegistrationScreen({navigation}) {
     }
 
     return (
-        <SafeAreaView style = {{flex: 1}}>
-            <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
+        <SafeAreaView style={styles.safeArea}>
+            <KeyboardAvoidingView style={styles.safeArea} behavior="padding">
                 <View style={styles.container}>
 
                     <View style={styles.header}>
@@ -135,21 +135,26 @@ export default function RegistrationScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: COLORS.background,
+    },
+
     container: {
         flex: 1,
         justifyContent: "center",
         backgroundColor: COLORS.background,
-        paddingHorizontal: 24,
+        paddingHorizontal: SPACING.lg,
     },
 
     header: {
-        marginBottom: 40,
+        marginBottom: SPACING.xl,
     },
 
     title: {
         ...TYPOGRAPHY.h2,
         color: COLORS.text,
-        marginBottom: 8,
+        marginBottom: SPACING.xs,
     },
 
     subtitle: {
@@ -161,8 +166,10 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.surface,
         borderWidth: 1,
         borderColor: COLORS.border,
+        borderRadius: RADIUS.lg,
         padding: SPACING.lg,
         marginBottom: SPACING.xl,
+        ...SHADOW.card,
     },
 
     label: {
@@ -178,6 +185,7 @@ const styles = StyleSheet.create({
         height: 48,
         borderWidth: 1,
         borderColor: COLORS.border,
+        borderRadius: RADIUS.md,
         paddingHorizontal: SPACING.md,
         backgroundColor: COLORS.surface,
         color: COLORS.text,
@@ -190,6 +198,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: SPACING.md,
+        borderRadius: RADIUS.md,
         ...SHADOW.button,
     },
 
@@ -206,7 +215,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 24,
+        marginTop: SPACING.lg,
         gap: SPACING.xs,
     },
 

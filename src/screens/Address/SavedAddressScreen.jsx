@@ -3,16 +3,22 @@ import {
   View,
   Text,
   FlatList,
-  Button,
   Alert,
   Pressable,
+  StyleSheet,
 } from "react-native";
 import { useSelector } from "react-redux";
-
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 import {
   getAddresses,
   deleteAddress,
 } from "../../services/addressService";
+import { COLORS } from "../../theme/colors";
+import TYPOGRAPHY from "../../theme/typography";
+import { SPACING } from "../../theme/spacing";
+import { SHADOW } from "../../theme/shadows";
+import { RADIUS } from "../../theme/radius";
 
 export default function SavedAddressScreen({
   navigation,
@@ -25,9 +31,13 @@ export default function SavedAddressScreen({
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
 
-  useEffect(() => {
-    loadAddresses();
-  }, [user]);
+  useFocusEffect(
+    useCallback(() => {
+        if (user) {
+            loadAddresses();
+        }
+    }, [user])
+);
 
   async function loadAddresses() {
     try {
@@ -87,77 +97,89 @@ export default function SavedAddressScreen({
             setSelectedAddress(item);
           }
         }}
-        style={{
-          borderWidth: selected ? 2 : 1,
-          borderColor: selected ? "blue" : "black",
-          padding: 10,
-          marginBottom: 15,
-        }}
+        style={({ pressed }) => [
+          styles.card,
+          selected && styles.selectedCard,
+          pressed && styles.pressed,
+        ]}
       >
-        <Text>{item.label}</Text>
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardTitle}>{item.label}</Text>
+          {item.isDefault && (
+            <Text style={styles.defaultBadge}>DEFAULT</Text>
+          )}
+        </View>
 
-        <Text>{item.addressLine}</Text>
+        <Text style={styles.addressText}>{item.addressLine}</Text>
 
-        <Text>
+        <Text style={styles.addressText}>
           {item.city}, {item.state}
         </Text>
 
-        <Text>{item.pincode}</Text>
+        <Text style={styles.addressText}>{item.pincode}</Text>
 
-        <Text>{item.country}</Text>
+        <Text style={styles.addressText}>{item.country}</Text>
 
-        <Text>Latitude : {item.latitude}</Text>
-
-        <Text>Longitude : {item.longitude}</Text>
-
-        <Text>
-          Default :
-          {item.isDefault ? " Yes" : " No"}
+        <Text style={styles.coordinateText}>
+          {item.latitude}, {item.longitude}
         </Text>
 
         {!selectionMode && (
-          <>
-            <View style={{ marginTop: 10 }} />
-
-            <Button
-              title="Edit"
+          <View style={styles.cardActions}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.smallButton,
+                pressed && styles.pressed,
+              ]}
               onPress={() =>
                 navigation.navigate("AddressForm", {
                   addressId: item.id,
                 })
               }
-            />
+            >
+              <Text style={styles.smallButtonText}>Edit</Text>
+            </Pressable>
 
-            <View style={{ height: 10 }} />
-
-            <Button
-              title="Delete"
+            <Pressable
+              style={({ pressed }) => [
+                styles.smallButton,
+                styles.deleteButton,
+                pressed && styles.pressed,
+              ]}
               onPress={() =>
                 handleDelete(item.id)
               }
-            />
-          </>
+            >
+              <Text style={styles.deleteButtonText}>Delete</Text>
+            </Pressable>
+          </View>
         )}
       </Pressable>
     );
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 20,
-        paddingTop: 50,
-      }}
-    >
-      <Button
-        title="Add Address"
+    <View style={styles.container}>
+      <Text style={styles.title}>
+        {selectionMode ? "Choose an Address" : "Saved Addresses"}
+      </Text>
+      <Text style={styles.subtitle}>
+        {selectionMode
+          ? "Select where you would like your order delivered."
+          : "Manage your saved delivery locations."}
+      </Text>
+
+      <Pressable
+        style={({ pressed }) => [
+          styles.addButton,
+          pressed && styles.primaryButtonPressed,
+        ]}
         onPress={() =>
           navigation.navigate("AddressForm")
         }
-      />
-
-      <View style={{ height: 20 }} />
+      >
+        <Text style={styles.addButtonText}>Add Address</Text>
+      </Pressable>
 
       <FlatList
         data={addresses}
@@ -165,19 +187,174 @@ export default function SavedAddressScreen({
           item.id.toString()
         }
         renderItem={renderItem}
+        contentContainerStyle={styles.list}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyTitle}>No saved addresses</Text>
+            <Text style={styles.emptyText}>
+              Add an address to make checkout quicker.
+            </Text>
+          </View>
+        }
       />
 
       {selectionMode && (
-        <Button
-          title="Proceed to Payment"
+        <Pressable
           disabled={!selectedAddress}
+          style={({ pressed }) => [
+            styles.proceedButton,
+            !selectedAddress && styles.disabledButton,
+            pressed && selectedAddress && styles.primaryButtonPressed,
+          ]}
           onPress={() =>
             navigation.navigate("Payment", {
               selectedAddress,
             })
           }
-        />
+        >
+          <Text style={styles.proceedButtonText}>Proceed to Payment</Text>
+        </Pressable>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.xxl,
+    backgroundColor: COLORS.background,
+  },
+  title: {
+    ...TYPOGRAPHY.h2,
+    color: COLORS.text,
+    marginBottom: SPACING.xs,
+  },
+  subtitle: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+    marginBottom: SPACING.lg,
+  },
+  addButton: {
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: SPACING.lg,
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.primary,
+    ...SHADOW.button,
+  },
+  addButtonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.surface,
+  },
+  list: {
+    paddingBottom: SPACING.lg,
+  },
+  card: {
+    padding: SPACING.md,
+    marginBottom: SPACING.md,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: RADIUS.lg,
+    backgroundColor: COLORS.surface,
+    ...SHADOW.card,
+  },
+  selectedCard: {
+    borderWidth: 2,
+    borderColor: COLORS.primary,
+  },
+  cardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: SPACING.sm,
+  },
+  cardTitle: {
+    ...TYPOGRAPHY.title,
+    color: COLORS.text,
+  },
+  defaultBadge: {
+    ...TYPOGRAPHY.caption,
+    color: COLORS.primaryDark,
+    paddingVertical: SPACING.xxs,
+    paddingHorizontal: SPACING.xs,
+    borderRadius: RADIUS.pill,
+    backgroundColor: COLORS.background,
+  },
+  addressText: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+  },
+  coordinateText: {
+    ...TYPOGRAPHY.caption,
+    color: COLORS.textTertiary,
+    marginTop: SPACING.sm,
+  },
+  cardActions: {
+    flexDirection: "row",
+    gap: SPACING.sm,
+    paddingTop: SPACING.md,
+    marginTop: SPACING.md,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.divider,
+  },
+  smallButton: {
+    flex: 1,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    borderRadius: RADIUS.md,
+  },
+  smallButtonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.primary,
+  },
+  deleteButton: {
+    borderColor: COLORS.error,
+  },
+  deleteButtonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.error,
+  },
+  proceedButton: {
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: SPACING.lg,
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.primary,
+    ...SHADOW.button,
+  },
+  proceedButtonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.surface,
+  },
+  disabledButton: {
+    backgroundColor: COLORS.disabled,
+  },
+  primaryButtonPressed: {
+    backgroundColor: COLORS.primaryDark,
+  },
+  pressed: {
+    opacity: 0.75,
+  },
+  emptyState: {
+    alignItems: "center",
+    paddingVertical: SPACING.xxl,
+  },
+  emptyTitle: {
+    ...TYPOGRAPHY.h3,
+    color: COLORS.text,
+    marginBottom: SPACING.xs,
+  },
+  emptyText: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+    textAlign: "center",
+  },
+});

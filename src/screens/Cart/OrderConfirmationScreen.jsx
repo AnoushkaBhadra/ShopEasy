@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import {
+  ScrollView,
   View,
   Text,
-  Button,
   ActivityIndicator,
+  Pressable,
+  StyleSheet,
 } from "react-native";
 
 import { getOrder } from "../../services/orderService";
 import { getAddress } from "../../services/addressService";
+
+import { COLORS } from "../../theme/colors";
+import TYPOGRAPHY from "../../theme/typography";
+import { SPACING } from "../../theme/spacing";
+import { SHADOW } from "../../theme/shadows";
+import { RADIUS } from "../../theme/radius";
 
 export default function OrderConfirmationScreen({
   navigation,
@@ -43,105 +51,292 @@ export default function OrderConfirmationScreen({
 
   if (loading) {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ActivityIndicator size="large" />
+      <View style={styles.centered}>
+        <ActivityIndicator
+          size="large"
+          color={COLORS.primary}
+        />
       </View>
     );
   }
 
   if (!order || !address) {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text>Unable to load order.</Text>
+      <View style={styles.centered}>
+        <Text style={styles.message}>
+          Unable to load order.
+        </Text>
       </View>
     );
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 20,
-        paddingTop: 50,
-      }}
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
     >
-      <Text
-        style={{
-          fontSize: 24,
-          marginBottom: 20,
-        }}
-      >
+      <View style={styles.successMark}>
+        <Text style={styles.successMarkText}>✓</Text>
+      </View>
+
+      <Text style={styles.title}>
         Order Placed Successfully!
       </Text>
 
-      <Text>Order ID</Text>
-      <Text>{order.id}</Text>
-
-      <View style={{ height: 15 }} />
-
-      <Text>Order Date</Text>
-      <Text>{order.orderDate}</Text>
-
-      <View style={{ height: 15 }} />
-
-      <Text>Status</Text>
-      <Text>{order.status}</Text>
-
-      <View style={{ height: 15 }} />
-
-      <Text>Payment Method</Text>
-      <Text>{order.paymentMethod}</Text>
-
-      <View style={{ height: 15 }} />
-
-      <Text>Payment Status</Text>
-      <Text>{order.paymentStatus}</Text>
-
-      <View style={{ height: 15 }} />
-
-      <Text>Total Amount</Text>
-      <Text>₹{order.totalAmount}</Text>
-
-      <View style={{ height: 25 }} />
-
-      <Text
-        style={{
-          fontWeight: "bold",
-        }}
-      >
-        Delivery Address
+      <Text style={styles.subtitle}>
+        Your order has been received and is being prepared.
       </Text>
 
-      <Text>{address.label}</Text>
+      <View style={styles.card}>
+        <View style={styles.detailRow}>
+          <Text style={styles.label}>Order ID</Text>
+          <Text style={styles.value}>{order.id}</Text>
+        </View>
 
-      <Text>{address.addressLine}</Text>
+        <View style={styles.detailRow}>
+          <Text style={styles.label}>Order Date</Text>
+          <Text style={styles.value}>
+            {new Date(order.orderDate).toLocaleString()}
+          </Text>
+        </View>
 
-      <Text>
-        {address.city}, {address.state}
-      </Text>
+        <View style={styles.detailRow}>
+          <Text style={styles.label}>Status</Text>
+          <Text style={styles.status}>
+            {order.status}
+          </Text>
+        </View>
 
-      <Text>{address.pincode}</Text>
+        <View style={styles.detailRow}>
+          <Text style={styles.label}>
+            Payment Method
+          </Text>
+          <Text style={styles.value}>
+            {order.paymentMethod}
+          </Text>
+        </View>
 
-      <View style={{ height: 40 }} />
+        <View style={styles.detailRow}>
+          <Text style={styles.label}>
+            Payment Status
+          </Text>
+          <Text style={styles.value}>
+            {order.paymentStatus}
+          </Text>
+        </View>
 
-      <Button
-        title="Continue Shopping"
+        <View
+          style={[
+            styles.detailRow,
+            styles.totalRow,
+          ]}
+        >
+          <Text style={styles.totalLabel}>
+            Total Amount
+          </Text>
+
+          <Text style={styles.total}>
+            ₹{order.totalAmount}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.addressCard}>
+        <Text style={styles.sectionTitle}>
+          Delivery Address
+        </Text>
+
+        <Text style={styles.addressTitle}>
+          {address.label}
+        </Text>
+
+        <Text style={styles.addressText}>
+          {address.addressLine}
+        </Text>
+
+        <Text style={styles.addressText}>
+          {address.city}, {address.state}
+        </Text>
+
+        <Text style={styles.addressText}>
+          {address.pincode}
+        </Text>
+
+        <Text style={styles.addressText}>
+          {address.country}
+        </Text>
+      </View>
+
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          pressed && styles.buttonPressed,
+        ]}
         onPress={() =>
-          navigation.navigate("AppTabs")
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: "AppTabs",
+              },
+            ],
+          })
         }
-      />
-    </View>
+      >
+        <Text style={styles.buttonText}>
+          Continue Shopping
+        </Text>
+      </Pressable>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.xxl,
+    paddingBottom: SPACING.xxl,
+    backgroundColor: COLORS.background,
+    flexGrow: 1,
+  },
+
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.background,
+  },
+
+  message: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+  },
+
+  successMark: {
+    width: 60,
+    height: 60,
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: RADIUS.pill,
+    backgroundColor: COLORS.success,
+    marginBottom: SPACING.md,
+  },
+
+  successMarkText: {
+    ...TYPOGRAPHY.h2,
+    color: COLORS.surface,
+  },
+
+  title: {
+    ...TYPOGRAPHY.h2,
+    color: COLORS.text,
+    textAlign: "center",
+    marginBottom: SPACING.sm,
+  },
+
+  subtitle: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+    textAlign: "center",
+    marginBottom: SPACING.xl,
+  },
+
+  card: {
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: RADIUS.lg,
+    padding: SPACING.lg,
+    marginBottom: SPACING.lg,
+    ...SHADOW.card,
+  },
+
+  detailRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: SPACING.sm,
+    gap: SPACING.md,
+  },
+
+  label: {
+    ...TYPOGRAPHY.bodySmall,
+    color: COLORS.textSecondary,
+  },
+
+  value: {
+    ...TYPOGRAPHY.bodySmall,
+    color: COLORS.text,
+    flex: 1,
+    textAlign: "right",
+  },
+
+  status: {
+    ...TYPOGRAPHY.label,
+    color: COLORS.success,
+    textTransform: "capitalize",
+  },
+
+  totalRow: {
+    borderTopWidth: 1,
+    borderTopColor: COLORS.divider,
+    paddingTop: SPACING.md,
+    marginTop: SPACING.sm,
+  },
+
+  totalLabel: {
+    ...TYPOGRAPHY.title,
+    color: COLORS.text,
+  },
+
+  total: {
+    ...TYPOGRAPHY.price,
+    color: COLORS.primary,
+  },
+
+  addressCard: {
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: RADIUS.lg,
+    padding: SPACING.lg,
+    marginBottom: SPACING.xl,
+    ...SHADOW.card,
+  },
+
+  sectionTitle: {
+    ...TYPOGRAPHY.label,
+    color: COLORS.primary,
+    marginBottom: SPACING.sm,
+    textTransform: "uppercase",
+  },
+
+  addressTitle: {
+    ...TYPOGRAPHY.title,
+    color: COLORS.text,
+    marginBottom: SPACING.xs,
+  },
+
+  addressText: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+  },
+
+  button: {
+    height: 50,
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    ...SHADOW.button,
+  },
+
+  buttonPressed: {
+    backgroundColor: COLORS.primaryDark,
+  },
+
+  buttonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.surface,
+  },
+});

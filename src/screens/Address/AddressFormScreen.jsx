@@ -3,13 +3,16 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Alert,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Pressable,
+  StyleSheet,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 import {
   getAddress,
@@ -17,9 +20,25 @@ import {
   updateAddress,
 } from "../../services/addressService";
 
-import {
-  clearLocation,
-} from "../../store/slices/locationSlice";
+import { clearLocation } from "../../store/slices/locationSlice";
+import { COLORS } from "../../theme/colors";
+import TYPOGRAPHY from "../../theme/typography";
+import { SPACING } from "../../theme/spacing";
+import { SHADOW } from "../../theme/shadows";
+import { RADIUS } from "../../theme/radius";
+
+const addressValidationSchema = Yup.object({
+  label: Yup.string().required("Label is required."),
+  addressLine: Yup.string().required("Address line is required."),
+  city: Yup.string().required("City is required."),
+  state: Yup.string().required("State is required."),
+  pincode: Yup.string()
+    .required("Pincode is required.")
+    .matches(/^\d{6}$/, "Pincode must be exactly 6 digits."),
+  country: Yup.string().required("Country is required."),
+  latitude: Yup.string().required("Latitude is required."),
+  longitude: Yup.string().required("Longitude is required."),
+});
 
 export default function AddressFormScreen({ navigation, route }) {
   const dispatch = useDispatch();
@@ -28,19 +47,27 @@ export default function AddressFormScreen({ navigation, route }) {
 
   const user = useSelector((state) => state.auth.user);
 
-  const location = useSelector(
-    (state) => state.location
-  );
+  const location = useSelector((state) => state.location);
 
-  const [label, setLabel] = useState("");
-  const [addressLine, setAddressLine] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [pincode, setPincode] = useState("");
-  const [country, setCountry] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const latitudeFromRedux = location?.latitude;
+  const longitudeFromRedux = location?.longitude;
+
   const [isDefault, setIsDefault] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      label: "",
+      addressLine: "",
+      city: "",
+      state: "",
+      pincode: "",
+      country: "",
+      latitude: "",
+      longitude: "",
+    },
+    validationSchema: addressValidationSchema,
+    onSubmit: handleSave,
+  });
 
   useEffect(() => {
     dispatch(clearLocation());
@@ -51,34 +78,34 @@ export default function AddressFormScreen({ navigation, route }) {
   }, []);
 
   useEffect(() => {
-    if (
-      location.latitude !== null &&
-      location.longitude !== null
-    ) {
-      setLatitude(String(location.latitude));
-      setLongitude(String(location.longitude));
+    console.log("REDUX LOCATION:", latitudeFromRedux, longitudeFromRedux);
+    if (latitudeFromRedux != null && longitudeFromRedux != null) {
+      formik.setFieldValue("latitude", String(latitudeFromRedux));
+      formik.setFieldValue("longitude", String(longitudeFromRedux));
     }
-  }, [location]);
+  }, [latitudeFromRedux, longitudeFromRedux]);
 
   async function loadAddress() {
     try {
       const address = await getAddress(addressId);
 
-      setLabel(address.label);
-      setAddressLine(address.addressLine);
-      setCity(address.city);
-      setState(address.state);
-      setPincode(address.pincode);
-      setCountry(address.country);
-      setLatitude(String(address.latitude));
-      setLongitude(String(address.longitude));
+      formik.setValues({
+        label: address.label,
+        addressLine: address.addressLine,
+        city: address.city,
+        state: address.state,
+        pincode: String(address.pincode),
+        country: address.country,
+        latitude: String(address.latitude),
+        longitude: String(address.longitude),
+      });
       setIsDefault(address.isDefault);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function handleSave() {
+  async function handleSave(values) {
     try {
       if (!user) {
         Alert.alert("Error", "User not found.");
@@ -87,14 +114,14 @@ export default function AddressFormScreen({ navigation, route }) {
 
       const addressData = {
         userId: user.id,
-        label,
-        addressLine,
-        city,
-        state,
-        pincode,
-        country,
-        latitude: Number(latitude),
-        longitude: Number(longitude),
+        label: values.label,
+        addressLine: values.addressLine,
+        city: values.city,
+        state: values.state,
+        pincode: values.pincode,
+        country: values.country,
+        latitude: Number(values.latitude),
+        longitude: Number(values.longitude),
         isDefault,
       };
 
@@ -118,153 +145,278 @@ export default function AddressFormScreen({ navigation, route }) {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
-        contentContainerStyle={{
-          padding: 20,
-          paddingTop: 50,
-          paddingBottom: 40,
-        }}
+        contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
-        <Text>Label</Text>
+        <Text style={styles.title}>
+          {addressId ? "Edit Address" : "Add Address"}
+        </Text>
+        <Text style={styles.subtitle}>Enter your delivery details below.</Text>
 
-        <TextInput
-          value={label}
-          onChangeText={setLabel}
-          style={{
-            borderWidth: 1,
-            marginBottom: 15,
-            padding: 8,
-          }}
-        />
+        <View style={styles.form}>
+          <Text style={styles.label}>Label</Text>
 
-        <Text>Address Line</Text>
+          <TextInput
+            value={formik.values.label}
+            onChangeText={formik.handleChange("label")}
+            onBlur={formik.handleBlur("label")}
+            style={styles.input}
+            placeholderTextColor={COLORS.textTertiary}
+          />
+          {formik.touched.label && formik.errors.label && (
+            <Text>{formik.errors.label}</Text>
+          )}
 
-        <TextInput
-          value={addressLine}
-          onChangeText={setAddressLine}
-          style={{
-            borderWidth: 1,
-            marginBottom: 15,
-            padding: 8,
-          }}
-        />
+          <Text style={styles.label}>Address Line</Text>
 
-        <Text>City</Text>
+          <TextInput
+            value={formik.values.addressLine}
+            onChangeText={formik.handleChange("addressLine")}
+            onBlur={formik.handleBlur("addressLine")}
+            style={styles.input}
+            placeholderTextColor={COLORS.textTertiary}
+          />
+          {formik.touched.addressLine && formik.errors.addressLine && (
+            <Text>{formik.errors.addressLine}</Text>
+          )}
 
-        <TextInput
-          value={city}
-          onChangeText={setCity}
-          style={{
-            borderWidth: 1,
-            marginBottom: 15,
-            padding: 8,
-          }}
-        />
+          <Text style={styles.label}>City</Text>
 
-        <Text>State</Text>
+          <TextInput
+            value={formik.values.city}
+            onChangeText={formik.handleChange("city")}
+            onBlur={formik.handleBlur("city")}
+            style={styles.input}
+            placeholderTextColor={COLORS.textTertiary}
+          />
+          {formik.touched.city && formik.errors.city && (
+            <Text>{formik.errors.city}</Text>
+          )}
 
-        <TextInput
-          value={state}
-          onChangeText={setState}
-          style={{
-            borderWidth: 1,
-            marginBottom: 15,
-            padding: 8,
-          }}
-        />
+          <Text style={styles.label}>State</Text>
 
-        <Text>Pincode</Text>
+          <TextInput
+            value={formik.values.state}
+            onChangeText={formik.handleChange("state")}
+            onBlur={formik.handleBlur("state")}
+            style={styles.input}
+            placeholderTextColor={COLORS.textTertiary}
+          />
+          {formik.touched.state && formik.errors.state && (
+            <Text>{formik.errors.state}</Text>
+          )}
 
-        <TextInput
-          value={pincode}
-          onChangeText={setPincode}
-          keyboardType="numeric"
-          style={{
-            borderWidth: 1,
-            marginBottom: 15,
-            padding: 8,
-          }}
-        />
+          <Text style={styles.label}>Pincode</Text>
 
-        <Text>Country</Text>
+          <TextInput
+            value={formik.values.pincode}
+            onChangeText={formik.handleChange("pincode")}
+            onBlur={formik.handleBlur("pincode")}
+            keyboardType="numeric"
+            style={styles.input}
+            placeholderTextColor={COLORS.textTertiary}
+          />
+          {formik.touched.pincode && formik.errors.pincode && (
+            <Text>{formik.errors.pincode}</Text>
+          )}
 
-        <TextInput
-          value={country}
-          onChangeText={setCountry}
-          style={{
-            borderWidth: 1,
-            marginBottom: 15,
-            padding: 8,
-          }}
-        />
+          <Text style={styles.label}>Country</Text>
 
-        <Text>Latitude</Text>
+          <TextInput
+            value={formik.values.country}
+            onChangeText={formik.handleChange("country")}
+            onBlur={formik.handleBlur("country")}
+            style={styles.input}
+            placeholderTextColor={COLORS.textTertiary}
+          />
+          {formik.touched.country && formik.errors.country && (
+            <Text>{formik.errors.country}</Text>
+          )}
 
-        <TextInput
-          value={latitude}
-          editable={false}
-          style={{
-            borderWidth: 1,
-            marginBottom: 15,
-            padding: 8,
-          }}
-        />
+          <Text style={styles.label}>Latitude</Text>
 
-        <Text>Longitude</Text>
+          <TextInput
+            value={formik.values.latitude}
+            onBlur={formik.handleBlur("latitude")}
+            editable={false}
+            style={[styles.input, styles.readOnlyInput]}
+          />
+          {formik.touched.latitude && formik.errors.latitude && (
+            <Text>{formik.errors.latitude}</Text>
+          )}
 
-        <TextInput
-          value={longitude}
-          editable={false}
-          style={{
-            borderWidth: 1,
-            marginBottom: 20,
-            padding: 8,
-          }}
-        />
+          <Text style={styles.label}>Longitude</Text>
 
-        <Button
-          title="Pick Location on Map"
-          onPress={() =>
-            navigation.navigate("MapSelection")
-          }
-        />
+          <TextInput
+            value={formik.values.longitude}
+            onBlur={formik.handleBlur("longitude")}
+            editable={false}
+            style={[styles.input, styles.readOnlyInput]}
+          />
+          {formik.touched.longitude && formik.errors.longitude && (
+            <Text>{formik.errors.longitude}</Text>
+          )}
 
-        <View style={{ height: 15 }} />
+          <Pressable
+            style={({ pressed }) => [
+              styles.secondaryButton,
+              pressed && styles.buttonPressed,
+            ]}
+            onPress={() => navigation.navigate("MapSelection")}
+          >
+            <Text style={styles.secondaryButtonText}>Pick Location on Map</Text>
+          </Pressable>
 
-        <Button
-          title={
-            addressId
-              ? "Update Address"
-              : "Save Address"
-          }
-          onPress={handleSave}
-        />
+          <Pressable
+            style={({ pressed }) => [
+              styles.primaryButton,
+              pressed && styles.primaryButtonPressed,
+            ]}
+            onPress={formik.handleSubmit}
+          >
+            <Text style={styles.primaryButtonText}>
+              {addressId ? "Update Address" : "Save Address"}
+            </Text>
+          </Pressable>
 
-        <View style={{ height: 10 }} />
+          <Pressable
+            style={({ pressed }) => [
+              styles.secondaryButton,
+              isDefault && styles.selectedButton,
+              pressed && styles.buttonPressed,
+            ]}
+            onPress={() => setIsDefault(!isDefault)}
+          >
+            <Text
+              style={[
+                styles.secondaryButtonText,
+                isDefault && styles.selectedButtonText,
+              ]}
+            >
+              {isDefault ? "Default Address" : "Set as Default"}
+            </Text>
+          </Pressable>
 
-        <Button
-          title={
-            isDefault
-              ? "Default Address"
-              : "Set as Default"
-          }
-          onPress={() => setIsDefault(!isDefault)}
-        />
-
-        <View style={{ height: 10 }} />
-
-        <Button
-          title="Cancel"
-          onPress={() => {
-            dispatch(clearLocation());
-            navigation.goBack();
-          }}
-        />
+          <Pressable
+            style={({ pressed }) => [
+              styles.textButton,
+              pressed && styles.buttonPressed,
+            ]}
+            onPress={() => {
+              dispatch(clearLocation());
+              navigation.goBack();
+            }}
+          >
+            <Text style={styles.textButtonText}>Cancel</Text>
+          </Pressable>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.background,
+  },
+  content: {
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.xxl,
+    paddingBottom: SPACING.xxl,
+  },
+  title: {
+    ...TYPOGRAPHY.h2,
+    color: COLORS.text,
+    marginBottom: SPACING.xs,
+  },
+  subtitle: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+    marginBottom: SPACING.lg,
+  },
+  form: {
+    padding: SPACING.lg,
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: RADIUS.lg,
+    ...SHADOW.card,
+  },
+  label: {
+    ...TYPOGRAPHY.label,
+    color: COLORS.text,
+    marginBottom: SPACING.xs,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  input: {
+    height: 48,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: RADIUS.md,
+    paddingHorizontal: SPACING.md,
+    marginBottom: SPACING.md,
+    backgroundColor: COLORS.surface,
+    color: COLORS.text,
+    ...TYPOGRAPHY.body,
+  },
+  readOnlyInput: {
+    backgroundColor: COLORS.background,
+    color: COLORS.textSecondary,
+  },
+  primaryButton: {
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: SPACING.sm,
+    backgroundColor: COLORS.primary,
+    borderRadius: RADIUS.md,
+    ...SHADOW.button,
+  },
+  primaryButtonPressed: {
+    backgroundColor: COLORS.primaryDark,
+  },
+  primaryButtonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.surface,
+  },
+  secondaryButton: {
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: SPACING.sm,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.surface,
+  },
+  secondaryButtonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.primary,
+  },
+  selectedButton: {
+    backgroundColor: COLORS.primaryLight,
+    borderColor: COLORS.primaryLight,
+  },
+  selectedButtonText: {
+    color: COLORS.surface,
+  },
+  textButton: {
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: SPACING.xs,
+  },
+  textButtonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.textSecondary,
+  },
+  buttonPressed: {
+    opacity: 0.7,
+  },
+});

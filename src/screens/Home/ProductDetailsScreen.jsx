@@ -4,7 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 
 import { COLORS } from '../../theme/colors';
+import TYPOGRAPHY from '../../theme/typography';
 import { SPACING } from '../../theme/spacing';
+import { SHADOW } from '../../theme/shadows';
+import { RADIUS } from '../../theme/radius';
 import { addToCart } from '../../store/slices/cartSlice';
 
 
@@ -75,63 +78,63 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: 320,
-        backgroundColor: "#fff",
+        backgroundColor: COLORS.surface,
     },
 
     content: {
         padding: SPACING.lg,
+        backgroundColor: COLORS.background,
     },
 
     category: {
-        fontSize: 14,
-        color: COLORS.gray,
-        marginBottom: 8,
+        ...TYPOGRAPHY.label,
+        color: COLORS.primary,
+        marginBottom: SPACING.xs,
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
     },
 
     title: {
-        fontSize: 24,
-        fontWeight: "bold",
+        ...TYPOGRAPHY.h2,
         color: COLORS.text,
-        marginBottom: 10,
+        marginBottom: SPACING.sm,
     },
 
     price: {
-        fontSize: 22,
-        fontWeight: "bold",
+        ...TYPOGRAPHY.price,
         color: COLORS.primary,
-        marginBottom: 10,
+        marginBottom: SPACING.sm,
     },
 
     rating: {
-        fontSize: 16,
-        marginBottom: 20,
+        ...TYPOGRAPHY.body,
+        marginBottom: SPACING.lg,
         color: COLORS.text,
     },
 
     heading: {
-        fontSize: 18,
-        fontWeight: "600",
-        marginBottom: 10,
+        ...TYPOGRAPHY.h3,
+        marginBottom: SPACING.sm,
         color: COLORS.text,
     },
 
     description: {
-        fontSize: 15,
-        lineHeight: 24,
-        color: COLORS.text,
-        marginBottom: 30,
+        ...TYPOGRAPHY.body,
+        color: COLORS.textSecondary,
+        marginBottom: SPACING.xl,
     },
 
     button: {
+        height: 48,
         backgroundColor: COLORS.primary,
-        paddingVertical: 16,
-        borderRadius: 12,
+        borderRadius: RADIUS.md,
+        justifyContent: "center",
         alignItems: "center",
+        ...SHADOW.button,
     },
 
     buttonText: {
-        color: "#fff",
-        fontSize: 16,
-        fontWeight: "bold",
+        ...TYPOGRAPHY.button,
+        color: COLORS.surface,
     },
 });

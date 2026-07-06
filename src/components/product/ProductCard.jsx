@@ -5,6 +5,7 @@ import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
 import { SPACING } from "../../theme/spacing";
 import { SHADOW } from "../../theme/shadows";
+import { RADIUS } from "../../theme/radius";
 
 import Price from "./Price";
 import Rating from "./Rating";
@@ -66,6 +67,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.surface,
         borderWidth: 1,
         borderColor: COLORS.border,
+        borderRadius: RADIUS.lg,
+        overflow: "hidden",
         margin: SPACING.xs,
         ...SHADOW.card,
     },

@@ -26,7 +26,6 @@ export default function HomeScreen({ navigation }) {
     const { products, filteredProducts, loading, error } = useSelector(
         (state) => state.products
     );
-    console.log(useSelector(state => state.products));
 
     const wishlist = useSelector(state => state.wishlist.items);
 
@@ -34,13 +33,9 @@ export default function HomeScreen({ navigation }) {
     useEffect(() => {
         const fetchProducts = async () => {
             dispatch(setLoading(true));
-            console.log("Fetching products...");
-            console.time("Fetch products");
 
             try {
                 const products = await getProducts();
-                console.timeEnd("Fetch Products");
-                console.log("Products received:", products.length);
 
                 dispatch(setProducts(products));
             } catch (err) {
@@ -56,7 +51,6 @@ export default function HomeScreen({ navigation }) {
         dispatch(searchProducts(text));
     };
 
-    console.log("Categories:", categories);
     const handleCategory = (category) => {
         setSelectedCategory(category);
         dispatch(filterProducts(category));
@@ -84,10 +78,7 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <HomeHeader
-                onProfilePress={() => navigation.navigate("Profile")}
-                onCartPress={() => navigation.navigate("Cart")}
-            />
+            <HomeHeader/>
 
             <SearchBar
                 value={search}

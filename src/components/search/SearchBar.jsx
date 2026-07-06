@@ -5,6 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
 import { SPACING } from "../../theme/spacing";
+import { RADIUS } from "../../theme/radius";
 
 export default function SearchBar({value,onChangeText,placeholder = "Search products...",
 }) {
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
 
         borderWidth: 1,
         borderColor: COLORS.border,
+        borderRadius: RADIUS.md,
 
         paddingHorizontal: SPACING.md,
     },

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { View, Button } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import { COLORS } from "../theme/colors";
+import TYPOGRAPHY from "../theme/typography";
+import { SPACING } from "../theme/spacing";
+import { SHADOW } from "../theme/shadows";
+import { RADIUS } from "../theme/radius";
 
 export default function QRScanner({ onQRScanned }) {
   const [permission, requestPermission] = useCameraPermissions();
@@ -20,8 +25,16 @@ export default function QRScanner({ onQRScanned }) {
 
   if (!permission.granted) {
     return (
-      <View style={{ paddingTop: 50 }}>
-        <Button title="Grant Camera Permission" onPress={requestPermission} />
+      <View style={styles.container}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            pressed && styles.buttonPressed,
+          ]}
+          onPress={requestPermission}
+        >
+          <Text style={styles.buttonText}>Grant Camera Permission</Text>
+        </Pressable>
       </View>
     );
   }
@@ -29,10 +42,7 @@ export default function QRScanner({ onQRScanned }) {
   if (showCamera) {
     return (
       <CameraView
-        style={{
-          width: "100%",
-          height: 350,
-        }}
+        style={styles.camera}
         barcodeScannerSettings={{
           barcodeTypes: ["qr"],
         }}
@@ -42,8 +52,45 @@ export default function QRScanner({ onQRScanned }) {
   }
 
   return (
-    <View style={{ paddingTop: 50 }}>
-      <Button title="Scan QR" onPress={() => setShowCamera(true)} />
+    <View style={styles.container}>
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          pressed && styles.buttonPressed,
+        ]}
+        onPress={() => setShowCamera(true)}
+      >
+        <Text style={styles.buttonText}>Scan QR</Text>
+      </Pressable>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: SPACING.md,
+    backgroundColor: COLORS.surface,
+  },
+  camera: {
+    width: "100%",
+    height: 350,
+    borderRadius: RADIUS.lg,
+  },
+  button: {
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: RADIUS.md,
+    backgroundColor: COLORS.primary,
+    ...SHADOW.button,
+  },
+  buttonPressed: {
+    backgroundColor: COLORS.primaryDark,
+  },
+  buttonText: {
+    ...TYPOGRAPHY.button,
+    color: COLORS.surface,
+  },
+});

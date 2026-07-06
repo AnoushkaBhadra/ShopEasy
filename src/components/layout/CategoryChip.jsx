@@ -4,6 +4,7 @@ import { Text, Pressable, StyleSheet } from "react-native";
 import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
 import { SPACING } from "../../theme/spacing";
+import { RADIUS } from "../../theme/radius";
 
 export default function CategoryChip({title,selected,onPress,
 }) {
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
         borderColor: COLORS.border,
         backgroundColor: COLORS.surface,
         marginRight: SPACING.sm,
+        borderRadius: RADIUS.pill,
     },
 
     selectedChip: {
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
 
     text: {
         ...TYPOGRAPHY.body,
-        color: "black",
+        color: COLORS.text,
     },
 
     selectedText: {
