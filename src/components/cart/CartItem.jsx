@@ -10,27 +10,56 @@ import { SPACING } from "../../theme/spacing";
 import { SHADOW } from "../../theme/shadows";
 
 export default function CartItem({item, onIncrease, onDecrease, onRemove}) {
-    return(
-        <View style = {styles.card}>
-            <Image source={{uri: item.image}} style = {styles.image}/>
-            <View style={styles.details}>
-                <Text style = {styles.name}>{item.name}</Text>
-                <Text style = {styles.category}>{item.category}</Text>
-                <Text style = {styles.price}>₹{item.price}</Text>
-                <View style= {styles.quantityRow}> <Pressable style={styles.quantityButton} onPress={() => onDecrease(item)}>
-                    <Ionicons name="remove" size={18} color={COLORS.primaryDark}/>
+    return (
+    <View style={styles.card}>
+        <Image source={{ uri: item.thumbnail }} style={styles.image} />
+
+        <View style={styles.details}>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.category}>{item.category}</Text>
+            <Text style={styles.price}>₹{item.price}</Text>
+
+            <View style={styles.quantityRow}>
+                <Pressable
+                    style={styles.quantityButton}
+                    onPress={() => onDecrease(item)}
+                >
+                    <Ionicons
+                        name="remove"
+                        size={18}
+                        color={COLORS.primaryDark}
+                    />
                 </Pressable>
-                <Text style = {styles.quantity}>{item.quantity}</Text>
-                <Pressable style = {styles.quantityButton} onPress={() => onIncrease(item)}>
-                    <Ionicons name="add" size={18} color = {COLORS.primaryDark}/>
+
+                <Text style={styles.quantity}>
+                    {item.quantity}
+                </Text>
+
+                <Pressable
+                    style={styles.quantityButton}
+                    onPress={() => onIncrease(item)}
+                >
+                    <Ionicons
+                        name="add"
+                        size={18}
+                        color={COLORS.primaryDark}
+                    />
                 </Pressable>
             </View>
         </View>
-        <Pressable style={styles.deleteButton} onPress={() => onRemove(item)}>
-            <Ionicons name = "trash-outline" size={22} color={COLORS.error}/>
+
+        <Pressable
+            style={styles.deleteButton}
+            onPress={() => onRemove(item)}
+        >
+            <Ionicons
+                name="trash-outline"
+                size={22}
+                color={COLORS.error}
+            />
         </Pressable>
     </View>
-    )
+);
 }
 
 const styles = StyleSheet.create({

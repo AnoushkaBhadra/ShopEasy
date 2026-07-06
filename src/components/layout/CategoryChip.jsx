@@ -1,15 +1,13 @@
 import React from "react";
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Text, Pressable, StyleSheet } from "react-native";
 
 import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
 import { SPACING } from "../../theme/spacing";
 
-export default function CategoryChip({
-    title,
-    selected,
-    onPress,
+export default function CategoryChip({title,selected,onPress,
 }) {
+    console.log("Chip: ", title, typeof title);
     return (
         <Pressable
             onPress={onPress}
@@ -20,10 +18,11 @@ export default function CategoryChip({
             ]}
         >
             <Text
-                style={[
-                    styles.text,
-                    selected && styles.selectedText,
-                ]}
+                 style={[
+                     styles.text,
+                     selected && styles.selectedText,
+                 ]} 
+                //style= {{fontSize: 18, color: "red", fontWeight: "bold"}}
             >
                 {title}
             </Text>
@@ -47,8 +46,8 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        ...TYPOGRAPHY.bodySmall,
-        color: COLORS.text,
+        ...TYPOGRAPHY.body,
+        color: "black",
     },
 
     selectedText: {
@@ -59,3 +58,14 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
 });
+
+// import React from "react";
+// import { Pressable, Text } from "react-native";
+
+// export default function CategoryChip({ title, onPress }) {
+//     return (
+//         <Pressable onPress={onPress}>
+//             <Text>HELLO</Text>
+//         </Pressable>
+//     );
+// }

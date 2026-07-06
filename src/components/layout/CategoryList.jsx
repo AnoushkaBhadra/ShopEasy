@@ -1,29 +1,33 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 
 import { SPACING } from "../../theme/spacing";
 import CategoryChip from "./CategoryChip";
 
 export default function CategoryList({
-    categories,
+    categories = [],
     selected,
     onSelect,
 }) {
     return (
-        <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.container}
-        >
-            {categories.map((category) => (
-                <CategoryChip
-                    key={category}
-                    title={category}
-                    selected={selected === category}
-                    onPress={() => onSelect(category)}
-                />
-            ))}
-        </ScrollView>
+        <View style={styles.wrapper}>
+            <ScrollView
+                horizontal
+        
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.container}
+                scrollEventThrottle={16}
+            >
+                {categories.map((category) => (
+                    <CategoryChip
+                        key={category}
+                        title={category}
+                        selected={selected === category}
+                        onPress={() => onSelect(category)}
+                    />
+                ))}
+            </ScrollView>
+        </View>
     );
 }
 
@@ -32,4 +36,7 @@ const styles = StyleSheet.create({
         paddingVertical: SPACING.sm,
         paddingRight: SPACING.lg,
     },
+    wrapper: {
+        marginVertical: SPACING.sm
+    }
 });

@@ -29,33 +29,65 @@ const Stack = createNativeStackNavigator();
 
 export default function AppStack() {
   return (
-    <Stack.Navigator
-      initialRouteName="AppTabs"
-      screenOptions={{ headerShown: false }}
-    >
-      {/* Bottom Tabs */}
-      <Stack.Screen name="AppTabs" component={AppTabs} />
-      {/* Home */}
-      <Stack.Screen name="Product Details" component={ProductDetailsScreen} />
-      <Stack.Screen name="Search Result" component={SearchResultScreen} />
+  <Stack.Navigator
+    initialRouteName="AppTabs"
+    screenOptions={{ headerShown: false }}
+  >
+    {/* Bottom Tabs */}
+    <Stack.Screen
+      name="AppTabs"
+      component={AppTabs}
+    />
 
-      {/* Checkout */}
-      <Stack.Screen
-        name="Address Selection"
-        component={AddressSelectionScreen}
-      />
-      <Stack.Screen name="Payment" component={PaymentScreen} />
-      <Stack.Screen name="Order" component={OrderConfirmationScreen} />
+    {/* Home */}
+    <Stack.Screen
+      name="Product Details"
+      component={ProductDetailsScreen}
+    />
+    <Stack.Screen
+      name="Search Result"
+      component={SearchResultScreen}
+    />
 
-      {/* Orders */}
-      <Stack.Screen name="Order History" component={OrderHistoryScreen} />
-      <Stack.Screen name="Saved Addresses" component={SavedAddressScreen} />
+    {/* Checkout */}
+    <Stack.Screen
+      name="Address Selection"
+      component={AddressSelectionScreen}
+    />
+    <Stack.Screen
+      name="Payment"
+      component={PaymentScreen}
+    />
+    <Stack.Screen
+      name="Order"
+      component={OrderConfirmationScreen}
+    />
 
-      <Stack.Screen name="AddressForm" component={AddressFormScreen} />
+    {/* Orders */}
+    <Stack.Screen
+      name="Order History"
+      component={OrderHistoryScreen}
+    />
 
-      <Stack.Screen name="MapSelection" component={MapSelectionScreen} />
-      {/* Device Features */}
-      {/* <Stack.Screen name="QR Scanner" component={QRScanner} /> */}
-    </Stack.Navigator>
-  );
+    {/* Address */}
+    <Stack.Screen
+      name="Saved Addresses"
+      component={SavedAddressScreen}
+    />
+    <Stack.Screen
+      name="AddressForm"
+      component={AddressFormScreen}
+    />
+    <Stack.Screen
+      name="MapSelection"
+      component={MapSelectionScreen}
+    />
+
+    {/* Device Features */}
+    <Stack.Screen
+      name="QR Scanner"
+      component={QRScanner}
+    />
+  </Stack.Navigator>
+);
 }

@@ -1,41 +1,55 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Alert, StyleSheet, Pressable } from "react-native";
-import { KeyboardAvoidingView } from "react-native";
-import { login } from "../../services/authService";
-import { saveAuthData, getToken } from "../../utils/authStorage";
+import {View,Text,TextInput,Alert,StyleSheet,Pressable,KeyboardAvoidingView} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { useDispatch } from "react-redux";
+
+import { login as loginUser } from "../../services/authService";
+import { saveAuthData, getToken } from "../../utils/authStorage";
+import { login, setLoading } from "../../store/slices/authSlice";
+
 import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
-import { RADIUS } from "../../theme/radius";
 import { SPACING } from "../../theme/spacing";
-
 import { SHADOW } from "../../theme/shadows";
 
-
 export default function LoginScreen({ navigation }) {
+    const dispatch = useDispatch();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
- 
+    const [loading, setLocalLoading] = useState(false);
+
     const handleLogin = async () => {
+        dispatch(setLoading(true));
+        setLocalLoading(true);
+
         try {
-            setLoading(true);
- 
-            const result = await login(email, password);
+            const result = await loginUser(email, password);
+
             await saveAuthData(result.token, result.user);
+
             const storedToken = await getToken();
- 
+
             console.log("RESULT TOKEN:", result.token);
             console.log("TOKEN STORED:", storedToken);
- 
+
             if (!storedToken) {
                 throw new Error("Token not saved");
             }
- 
+
+            dispatch(
+                login({
+                    user: result.user,
+                    token: result.token,
+                })
+            );
+
             Alert.alert("Success", "Login successful");
-            navigation.getParent()?.replace("App");
+
             console.log("LOGIN SUCCESSFUL");
-            
+
+            navigation.getParent()?.replace("App");
         } catch (err) {
     console.log("LOGIN ERROR:", err);
     console.log("MESSAGE:", err.message);
@@ -44,25 +58,21 @@ export default function LoginScreen({ navigation }) {
 
     Alert.alert("Login Failed", err.message);
 } finally {
-            setLoading(false);
-        }
-    };
- 
+    dispatch(setLoading(false));
+    setLocalLoading(false);
+}
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
             <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
                 <View style={styles.container}>
-                    {/* Header section */}
                     <View style={styles.header}>
                         <Text style={styles.title}>Welcome Back</Text>
                         <Text style={styles.subtitle}>
                             Sign in to continue shopping
                         </Text>
                     </View>
- 
-                    {/* Form section */}
+
                     <View style={styles.form}>
-                        {/* Email field */}
                         <View style={styles.fieldGroup}>
                             <Text style={styles.label}>Email</Text>
                             <TextInput
@@ -76,8 +86,7 @@ export default function LoginScreen({ navigation }) {
                                 editable={!loading}
                             />
                         </View>
- 
-                        {/* Password field */}
+
                         <View style={styles.fieldGroup}>
                             <Text style={styles.label}>Password</Text>
                             <TextInput
@@ -90,8 +99,7 @@ export default function LoginScreen({ navigation }) {
                                 editable={!loading}
                             />
                         </View>
- 
-                        {/* Login button */}
+
                         <Pressable
                             onPress={handleLogin}
                             disabled={loading}
@@ -106,8 +114,7 @@ export default function LoginScreen({ navigation }) {
                             </Text>
                         </Pressable>
                     </View>
- 
-                    {/* Footer section */}
+
                     <View style={styles.footer}>
                         <Text style={styles.footerText}>Not registered?</Text>
                         <Pressable
@@ -130,7 +137,6 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
 
-    // Header: Title and subtitle
     header: {
         alignItems: "center",
         marginBottom: SPACING.xxl,
@@ -147,7 +153,6 @@ const styles = StyleSheet.create({
         color: COLORS.textSecondary,
     },
 
-    // Form container: minimal card with hairline border
     form: {
         backgroundColor: COLORS.surface,
         borderWidth: 1,
@@ -157,7 +162,6 @@ const styles = StyleSheet.create({
         ...SHADOW.card,
     },
 
-    // Field group: email or password field with label
     fieldGroup: {
         paddingTop: SPACING.sm,
     },
@@ -170,7 +174,6 @@ const styles = StyleSheet.create({
         letterSpacing: 0.5,
     },
 
-    // Minimal input: hairline border, no border radius
     input: {
         height: 48,
         borderWidth: 1,
@@ -180,8 +183,7 @@ const styles = StyleSheet.create({
         color: COLORS.text,
         ...TYPOGRAPHY.body,
     },
- 
-    // Minimal button: no border radius, clean shadow
+
     button: {
         height: 48,
         backgroundColor: COLORS.primary,
@@ -190,29 +192,28 @@ const styles = StyleSheet.create({
         marginTop: SPACING.md,
         ...SHADOW.button,
     },
- 
+
     buttonPressed: {
         backgroundColor: COLORS.primaryDark,
     },
- 
+
     buttonText: {
         ...TYPOGRAPHY.button,
         color: COLORS.surface,
     },
- 
-    // Footer: sign up link
+
     footer: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         gap: SPACING.xs,
     },
- 
+
     footerText: {
         ...TYPOGRAPHY.body,
         color: COLORS.text,
     },
- 
+
     link: {
         ...TYPOGRAPHY.body,
         color: COLORS.primary,

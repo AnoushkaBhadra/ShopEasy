@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/Home/HomeScreen";
 import CartScreen from "../screens/Cart/CartScreen";
 import ProfileScreen from "../screens/Profile/ProfileScreen";
-
+import WishlistScreen from "../screens/Wishlist/WishlistScreen";
 
 import { COLORS } from "../theme/colors";
 
@@ -48,6 +48,7 @@ export default function AppTabs() {
         <Tab.Screen name="Home" component={HomeScreen}/>
         <Tab.Screen name="Cart" component={CartScreen}/>
         <Tab.Screen name="Profile" component={ProfileScreen}/>
+        <Tab.Screen name="WishList" component={WishlistScreen}/>
         </Tab.Navigator>
     );
 }

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
@@ -11,7 +10,12 @@ import Price from "./Price";
 import Rating from "./Rating";
 import WishlistButton from "./WishListButton";
 
-export default function ProductCard({product, onPress, onWishList}) {
+function ProductCard({
+    product,
+    onPress,
+    onWishlist,
+    isLiked,
+}) {
     return (
         <Pressable
             onPress={() => onPress(product)}
@@ -21,7 +25,7 @@ export default function ProductCard({product, onPress, onWishList}) {
             ]}
         >
             <Image
-                source={{ uri: product.image }}
+                source={{ uri: product.thumbnail }}
                 style={styles.image}
             />
 
@@ -47,7 +51,7 @@ export default function ProductCard({product, onPress, onWishList}) {
                     </View>
 
                     <WishlistButton
-                        liked={product.liked}
+                        liked={isLiked}
                         onPress={() => onWishlist(product)}
                     />
                 </View>
@@ -55,6 +59,7 @@ export default function ProductCard({product, onPress, onWishList}) {
         </Pressable>
     );
 }
+
 const styles = StyleSheet.create({
     card: {
         flex: 1,
@@ -99,3 +104,5 @@ const styles = StyleSheet.create({
         alignItems: "flex-end",
     },
 });
+
+export default memo(ProductCard);

@@ -1,0 +1,244 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "title": "iPhone 15",
+            "price": 999,
+            "category": "Electronics",
+            "image": "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg",
+            "description": "Apple Smartphone with A17 Pro chip"
+        },
+        {
+            "id": 2,
+            "title": "Samsung Galaxy S24",
+            "price": 899,
+            "category": "Electronics",
+            "image": "https://images.pexels.com/photos/28687649/pexels-photo-28687649.jpeg",
+            "description": "Latest Android flagship phone"
+        },
+        {
+            "id": 3,
+            "title": "Sony WH-1000XM5 Headphones",
+            "price": 399,
+            "category": "Electronics",
+            "image": "https://images.pexels.com/photos/33481395/pexels-photo-33481395.jpeg",
+            "description": "Noise-cancelling wireless headphones"
+        },
+        {
+            "id": 4,
+            "title": "iPad Air",
+            "price": 599,
+            "category": "Electronics",
+            "image": "https://images.pexels.com/photos/33632618/pexels-photo-33632618.jpeg",
+            "description": "11-inch tablet with M1 chip"
+        },
+        {
+            "id": 5,
+            "title": "Men's Casual T-Shirt",
+            "price": 29,
+            "category": "Fashion",
+            "image": "https://images.pexels.com/photos/3290886/pexels-photo-3290886.jpeg",
+            "description": "100% cotton comfortable everyday wear"
+        },
+        {
+            "id": 6,
+            "title": "Women's Denim Jeans",
+            "price": 79,
+            "category": "Fashion",
+            "image": "https://images.pexels.com/photos/17466240/pexels-photo-17466240.jpeg",
+            "description": "Classic blue denim with stretch fit"
+        },
+        {
+            "id": 7,
+            "title": "Leather Backpack",
+            "price": 149,
+            "category": "Fashion",
+            "image": "https://images.pexels.com/photos/9088788/pexels-photo-9088788.jpeg",
+            "description": "Premium brown leather laptop backpack"
+        },
+        {
+            "id": 8,
+            "title": "Running Shoes",
+            "price": 129,
+            "category": "Fashion",
+            "image": "https://images.pexels.com/photos/1456733/pexels-photo-1456733.jpeg",
+            "description": "Lightweight athletic shoes for runners"
+        },
+        {
+            "id": 9,
+            "title": "Stainless Steel Coffee Maker",
+            "price": 89,
+            "category": "Home & Garden",
+            "image": "https://images.pexels.com/photos/38270190/pexels-photo-38270190.jpeg",
+            "description": "Programmable 12-cup coffee maker"
+        },
+        {
+            "id": 10,
+            "title": "Memory Foam Pillow",
+            "price": 49,
+            "category": "Home & Garden",
+            "image": "https://images.pexels.com/photos/18734695/pexels-photo-18734695.jpeg",
+            "description": "Ergonomic cooling gel pillow"
+        },
+        {
+            "id": 11,
+            "title": "LED Desk Lamp",
+            "price": 39,
+            "category": "Home & Garden",
+            "image": "https://images.pexels.com/photos/3962311/pexels-photo-3962311.jpeg",
+            "description": "Adjustable brightness desk lamp with USB charging"
+        },
+        {
+            "id": 12,
+            "title": "Plant Pot Set",
+            "price": 34,
+            "category": "Home & Garden",
+            "image": "https://images.pexels.com/photos/5974488/pexels-photo-5974488.jpeg",
+            "description": "Set of 3 ceramic plant pots with drainage"
+        },
+        {
+            "id": 13,
+            "title": "Yoga Mat",
+            "price": 39,
+            "category": "Sports",
+            "image": "https://images.pexels.com/photos/6239127/pexels-photo-6239127.jpeg",
+            "description": "Non-slip eco-friendly yoga mat (6mm)"
+        },
+        {
+            "id": 14,
+            "title": "Dumbbell Set",
+            "price": 99,
+            "category": "Sports",
+            "image": "https://images.pexels.com/photos/5738373/pexels-photo-5738373.jpeg",
+            "description": "Adjustable 5-25 lbs dumbbell set"
+        },
+        {
+            "id": 15,
+            "title": "Bicycle Helmet",
+            "price": 69,
+            "category": "Sports",
+            "image": "https://images.pexels.com/photos/164554/pexels-photo-164554.jpeg",
+            "description": "Safety certified bike helmet with ventilation"
+        },
+        {
+            "id": 16,
+            "title": "Camping Tent",
+            "price": 189,
+            "category": "Sports",
+            "image": "https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg",
+            "description": "4-person waterproof camping tent"
+        },
+        {
+            "id": 17,
+            "title": "The Midnight Library",
+            "price": 16,
+            "category": "Books",
+            "image": "https://images.pexels.com/photos/207667/pexels-photo-207667.jpeg",
+            "description": "Fiction novel by Matt Haig"
+        },
+        {
+            "id": 18,
+            "title": "Atomic Habits",
+            "price": 18,
+            "category": "Books",
+            "image": "https://images.pexels.com/photos/207667/pexels-photo-207667.jpeg",
+            "description": "Self-help book on building good habits"
+        },
+        {
+            "id": 19,
+            "title": "Python Programming Guide",
+            "price": 42,
+            "category": "Books",
+            "image": "https://images.pexels.com/photos/207667/pexels-photo-207667.jpeg",
+            "description": "Complete guide to Python development"
+        },
+        {
+            "id": 20,
+            "title": "Design Systems Handbook",
+            "price": 35,
+            "category": "Books",
+            "image": "https://images.pexels.com/photos/207667/pexels-photo-207667.jpeg",
+            "description": "Building scalable design systems"
+        },
+        {
+            "id": 21,
+            "title": "Organic Face Serum",
+            "price": 34,
+            "category": "Beauty",
+            "image": "https://images.pexels.com/photos/3718896/pexels-photo-3718896.jpeg",
+            "description": "Natural vitamin C serum for glowing skin"
+        },
+        {
+            "id": 22,
+            "title": "Moisturizing Face Cream",
+            "price": 28,
+            "category": "Beauty",
+            "image": "https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg",
+            "description": "Hydrating cream with SPF 30"
+        },
+        {
+            "id": 23,
+            "title": "Lipstick Palette",
+            "price": 24,
+            "category": "Beauty",
+            "image": "https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg",
+            "description": "12-color matte lipstick collection"
+        },
+        {
+            "id": 24,
+            "title": "Hair Growth Shampoo",
+            "price": 19,
+            "category": "Beauty",
+            "image": "https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg",
+            "description": "Biotin-enriched formula for hair strength"
+        },
+        {
+            "id": 25,
+            "title": "Organic Green Tea",
+            "price": 12,
+            "category": "Food & Beverage",
+            "image": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg",
+            "description": "Premium loose-leaf green tea (50g)"
+        },
+        {
+            "id": 26,
+            "title": "Dark Chocolate 85%",
+            "price": 8,
+            "category": "Food & Beverage",
+            "image": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg",
+            "description": "Single-origin dark chocolate bar"
+        },
+        {
+            "id": 27,
+            "title": "Almond Butter",
+            "price": 14,
+            "category": "Food & Beverage",
+            "image": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg",
+            "description": "Pure natural almond butter (250g jar)"
+        },
+        {
+            "id": 28,
+            "title": "Protein Powder",
+            "price": 32,
+            "category": "Food & Beverage",
+            "image": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg",
+            "description": "Vanilla whey protein powder (1kg)"
+        },
+        {
+            "id": 29,
+            "title": "Coffee Beans",
+            "price": 15,
+            "category": "Food & Beverage",
+            "image": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg",
+            "description": "Single-origin Ethiopian coffee beans (500g)"
+        },
+        {
+            "id": 30,
+            "title": "Ceramic Tea Set",
+            "price": 45,
+            "category": "Home & Garden",
+            "image": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg",
+            "description": "Traditional ceramic tea service for 4"
+        }
+    ]
+}

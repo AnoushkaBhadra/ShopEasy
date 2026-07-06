@@ -1,8 +1,21 @@
 import React from "react";
-import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
-import { useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector, useDispatch } from "react-redux";
+
 import CartItem from "../../components/cart/CartItem";
+
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart,
+} from "../../store/slices/cartSlice";
 
 import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
@@ -10,56 +23,12 @@ import { SPACING } from "../../theme/spacing";
 import { SHADOW } from "../../theme/shadows";
 
 export default function CartScreen({ navigation }) {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      category: "Electronics",
-      price: 2999,
-      quantity: 1,
-      image: "https://picsum.photos/300?1",
-    },
-    {
-      id: 2,
-      name: "Smart Watch",
-      category: "Electronics",
-      price: 4999,
-      quantity: 2,
-      image: "https://picsum.photos/300?2",
-    },
-  ]);
+  const dispatch = useDispatch();
 
-  const increaseQuantity = (item) => {
-    setCartItems((prev) =>
-      prev.map((product) =>
-        product.id === item.id
-          ? { ...product, quantity: product.quantity + 1 }
-          : product,
-      ),
-    );
-  };
+  const cartItems = useSelector((state) => state.cart.items);
+  const subtotal = useSelector((state) => state.cart.total);
 
-  const decreaseQuantity = (item) => {
-    setCartItems((prev) =>
-      prev.map((product) =>
-        product.id === item.id && product.quantity > 1
-          ? { ...product, quantity: product.quantity - 1 }
-          : product,
-      ),
-    );
-  };
-
-  const removeItem = (item) => {
-    setCartItems((prev) => prev.filter((product) => product.id !== item.id));
-  };
-
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
-
-  const delivery = subtotal > 0 ? 99 : 0;
-
+  const delivery = cartItems.length > 0 ? 99 : 0;
   const total = subtotal + delivery;
 
   return (
@@ -74,14 +43,22 @@ export default function CartScreen({ navigation }) {
         renderItem={({ item }) => (
           <CartItem
             item={item}
-            onIncrease={increaseQuantity}
-            onDecrease={decreaseQuantity}
-            onRemove={removeItem}
+            onIncrease={() =>
+              dispatch(increaseQuantity(item.id))
+            }
+            onDecrease={() =>
+              dispatch(decreaseQuantity(item.id))
+            }
+            onRemove={() =>
+              dispatch(removeFromCart(item.id))
+            }
           />
         )}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyTitle}>Your cart is empty</Text>
+            <Text style={styles.emptyTitle}>
+              Your cart is empty
+            </Text>
 
             <Text style={styles.emptyText}>
               Browse products and add items to your cart.
@@ -120,13 +97,16 @@ export default function CartScreen({ navigation }) {
               })
             }
           >
-            <Text style={styles.checkoutText}>Proceed to Checkout</Text>
+            <Text style={styles.checkoutText}>
+              Proceed to Checkout
+            </Text>
           </Pressable>
         </View>
       )}
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
