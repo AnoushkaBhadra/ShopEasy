@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Pressable,
   KeyboardAvoidingView,
+  Platform
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
@@ -71,7 +72,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.title}>Welcome Back</Text>
@@ -137,9 +138,10 @@ export default function LoginScreen({ navigation }) {
                 <Pressable
                   onPress={handleSubmit}
                   disabled={loading}
+                  android_ripple={{ color: COLORS.primaryLight }}
                   style={({ pressed }) => [
                     styles.button,
-                    pressed && !loading && styles.buttonPressed,
+                    Platform.OS === "ios" && pressed && !loading && styles.buttonPressed,
                     loading && { opacity: 0.7 },
                   ]}
                 >
@@ -165,11 +167,13 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
   container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: SPACING.lg,
-    backgroundColor: COLORS.background,
+  flex: 1,
+  justifyContent: "center",
+  paddingHorizontal: SPACING.lg,
+  paddingTop: Platform.OS === "android" ? SPACING.sm : 0,
+  backgroundColor: COLORS.background,
   },
 
   header: {
@@ -189,12 +193,13 @@ const styles = StyleSheet.create({
   },
 
   form: {
-    backgroundColor: COLORS.surface,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    padding: SPACING.lg,
-    marginBottom: SPACING.xl,
-    ...SHADOW.card,
+  backgroundColor: COLORS.surface,
+  borderWidth: 1,
+  borderColor: COLORS.border,
+  borderRadius: Platform.OS === "ios" ? 18 : 12,
+  padding: SPACING.lg,
+  marginBottom: SPACING.xl,
+  ...SHADOW.card,
   },
 
   fieldGroup: {
@@ -208,30 +213,41 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
-
   input: {
-    height: 48,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    paddingHorizontal: SPACING.md,
-    backgroundColor: COLORS.surface,
-    color: COLORS.text,
-    ...TYPOGRAPHY.body,
+  height: Platform.OS === "ios" ? 52 : 48,
+  borderWidth: 1,
+  borderColor: COLORS.border,
+  borderRadius: Platform.OS === "ios" ? 12 : 8,
+  paddingHorizontal: SPACING.md,
+  paddingVertical: Platform.OS === "ios" ? 12 : 8,
+  backgroundColor: COLORS.surface,
+  color: COLORS.text,
+  ...TYPOGRAPHY.body,
   },
 
   error: {
-    color: "red",
-    fontSize: 12,
-    marginTop: 4,
+  color: COLORS.error,
+  ...TYPOGRAPHY.caption,
+  marginTop: 4,
   },
 
   button: {
-    height: 48,
-    backgroundColor: COLORS.primary,
+    height: Platform.OS === "ios" ? 52 : 48,
     justifyContent: "center",
     alignItems: "center",
     marginTop: SPACING.md,
+    borderRadius: Platform.OS === "ios" ? 12 : 8,
+
     ...SHADOW.button,
+
+    ...Platform.select({
+      ios: {
+        backgroundColor: COLORS.primaryDark,
+      },
+      android: {
+        backgroundColor: COLORS.primary,
+      },
+    }),
   },
 
   buttonPressed: {

@@ -23,30 +23,26 @@
 //   shadow: "rgba(0,0,0,0.08)"
 // };
 
-
 export const COLORS = {
+  background: "#FAF8F5",
+  surface: "#FFFFFF",
 
-  background: "#FAF8F5",    
-  surface: "#FFFFFF",         
- 
-  text: "#2B2420",             
-  textSecondary: "#6B6259",    
-  textTertiary: "#A89E94",    
-  // Structural elements
-  border: "#E8E3DD",          
-  divider: "#E0DAD3",          
+  text: "#2B2420",
+  textSecondary: "#6B6259",
+  textTertiary: "#A89E94",
 
-  primary: "#8B6F47",          
-  primaryDark: "#6B5436",      
-  primaryLight: "#B8A885",   
-  
+  border: "#E8E3DD",
+  divider: "#E0DAD3",
 
-  success: "#5B8C6A",          
-  warning: "#C49A4F",         
-  error: "#A95C52",         
-  
-  // Disabled and shadow
-  disabled: "#D4CECA",      
-  shadow: "rgba(43, 36, 32, 0.06)",  
+  primary: "#8B6F47",
+  primaryDark: "#6B5436",
+  primaryLight: "#B8A885",
+
+  success: "#5B8C6A",
+  warning: "#C49A4F",
+  error: "#A95C52",
+
+  disabled: "#D4CECA",
+
+  shadow: "rgba(43,36,32,0.08)",
 };
- 

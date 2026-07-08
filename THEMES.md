@@ -591,6 +591,236 @@ Avoid
 
 ---
 
-# Overall Experience
+# Platform-Specific UI Guidelines
 
-The final application should feel like a premium retail application with understated elegance. Products remain the primary focus, while the interface quietly supports browsing, purchasing, and account management without distracting the user.
+To provide a native experience on both Android and iOS, the application follows platform-specific styling while maintaining the same overall design language.
+
+## Colors
+
+- Use the same color palette across both platforms.
+- Android buttons use `COLORS.primary`.
+- iOS buttons use `COLORS.primaryDark` for a slightly richer appearance.
+
+---
+
+## Typography
+
+Typography is shared between platforms, but font sizes are slightly adjusted.
+
+| Element | Android | iOS |
+|---------|---------|-----|
+| Display | 44 | 46 |
+| H1 | 44 | 46 |
+| H2 | 32 | 34 |
+| Body | 16 | 17 |
+| Small | 14 | 15 |
+
+This compensates for iOS rendering fonts slightly smaller than Android.
+
+---
+
+## Spacing
+
+Spacing is scaled depending on platform.
+
+- Android uses the base spacing scale.
+- iOS increases spacing by approximately 10%.
+
+Example:
+
+| Token | Android | iOS |
+|-------|---------|-----|
+| xs | 8 | 8.8 |
+| sm | 12 | 13.2 |
+| md | 16 | 17.6 |
+| lg | 24 | 26.4 |
+
+---
+
+## Border Radius
+
+Android follows Material Design with slightly sharper corners.
+
+| Component | Android | iOS |
+|----------|---------|-----|
+| Small | 6 | 8 |
+| Medium | 8 | 12 |
+| Large | 12 | 16 |
+
+---
+
+## Shadows
+
+Shadows are platform-specific.
+
+### Android
+
+- Uses `elevation`.
+- No shadowColor or shadowRadius.
+
+Example
+
+```js
+elevation: 4
+```
+
+### iOS
+
+Uses native shadow properties.
+
+```js
+shadowColor: "#000",
+shadowOffset: {
+    width: 0,
+    height: 2,
+},
+shadowOpacity: 0.12,
+shadowRadius: 8,
+```
+
+All cards and buttons use these platform-specific shadow styles through the shared `SHADOW` theme.
+
+---
+
+## Buttons
+
+Buttons follow each platform's native interaction pattern.
+
+### Android
+
+- Height: **48**
+- Background: `COLORS.primary`
+- Ripple effect enabled
+- Elevation-based shadow
+
+```jsx
+android_ripple={{
+    color: COLORS.primaryLight,
+}}
+```
+
+### iOS
+
+- Height: **52**
+- Background: `COLORS.primaryDark`
+- Opacity press feedback
+- Rounded corners
+- Native iOS shadows
+
+```jsx
+pressed && styles.buttonPressed
+```
+
+---
+
+## Text Inputs
+
+### Android
+
+- Height: **48**
+- Border radius: **8**
+- Vertical padding: **8**
+
+### iOS
+
+- Height: **52**
+- Border radius: **12**
+- Vertical padding: **12**
+
+This matches the native appearance of text fields on both platforms.
+
+---
+
+## Forms
+
+All authentication and form screens use:
+
+```jsx
+behavior={Platform.OS === "ios" ? "padding" : "height"}
+```
+
+This ensures the keyboard behaves correctly on both operating systems.
+
+---
+
+## Cards
+
+Cards share the same layout while using platform-specific shadows.
+
+### Android
+
+- Elevation-based shadow
+
+### iOS
+
+- Native shadow properties
+- Slightly softer appearance
+
+---
+
+## Press Feedback
+
+### Android
+
+Uses Material ripple.
+
+```jsx
+android_ripple={{
+    color: COLORS.primaryLight,
+}}
+```
+
+### iOS
+
+Uses opacity feedback.
+
+```jsx
+style={({ pressed }) => [
+    styles.button,
+    pressed && styles.buttonPressed,
+]}
+```
+
+---
+
+## Images
+
+Images may be slightly larger on iOS for better visual balance.
+
+Example:
+
+| Platform | Logo Size |
+|----------|-----------|
+| Android | 160 × 160 |
+| iOS | 180 × 180 |
+
+---
+
+## Screen Layout
+
+Containers use shared spacing while allowing minor platform adjustments.
+
+### Android
+
+```js
+paddingTop: SPACING.sm
+```
+
+### iOS
+
+```js
+paddingTop: 0
+```
+
+This improves alignment with the Android status bar while preserving iOS Safe Area behavior.
+
+---
+
+## Design Principle
+
+Platform-specific styling is implemented through:
+
+- `Platform.OS`
+- `Platform.select()`
+
+The application maintains a consistent visual identity while respecting Android Material Design conventions and Apple's Human Interface Guidelines.

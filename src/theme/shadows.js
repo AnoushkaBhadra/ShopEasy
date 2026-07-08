@@ -1,23 +1,51 @@
+import { Platform } from "react-native";
+
 export const SHADOW = {
-    card: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.08,
-        shadowRadius: 6,
-        elevation: 3
+  card: Platform.select({
+    ios: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 4,
+      },
+      shadowOpacity: 0.12,
+      shadowRadius: 10,
     },
 
-    button: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1
-        },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-        elevation: 2
-    }
+    android: {
+      elevation: 4,
+    },
+  }),
+
+  button: Platform.select({
+    ios: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.15,
+      shadowRadius: 6,
+    },
+
+    android: {
+      elevation: 6,
+    },
+  }),
+
+  floating: Platform.select({
+    ios: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 6,
+      },
+      shadowOpacity: 0.2,
+      shadowRadius: 12,
+    },
+
+    android: {
+      elevation: 8,
+    },
+  }),
 };

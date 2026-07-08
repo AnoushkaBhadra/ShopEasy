@@ -1,73 +1,92 @@
 import React from "react";
-import { Text, Pressable, StyleSheet } from "react-native";
+import {
+  Text,
+  Pressable,
+  StyleSheet,
+  Platform,
+} from "react-native";
 
 import { COLORS } from "../../theme/colors";
 import TYPOGRAPHY from "../../theme/typography";
 import { SPACING } from "../../theme/spacing";
 import { RADIUS } from "../../theme/radius";
 
-export default function CategoryChip({title,selected,onPress,
+export default function CategoryChip({
+  title,
+  selected,
+  onPress,
 }) {
-    console.log("Chip: ", title, typeof title);
-    return (
-        <Pressable
-            onPress={onPress}
-            style={({ pressed }) => [
-                styles.chip,
-                selected && styles.selectedChip,
-                pressed && styles.pressed,
-            ]}
-        >
-            <Text
-                 style={[
-                     styles.text,
-                     selected && styles.selectedText,
-                 ]} 
-                //style= {{fontSize: 18, color: "red", fontWeight: "bold"}}
-            >
-                {title}
-            </Text>
-        </Pressable>
-    );
+  return (
+    <Pressable
+      onPress={onPress}
+      android_ripple={{
+        color: COLORS.primaryLight,
+      }}
+      style={({ pressed }) => [
+        styles.chip,
+        selected && styles.selectedChip,
+        Platform.OS === "ios" &&
+          pressed &&
+          styles.pressed,
+      ]}
+    >
+      <Text
+        style={[
+          styles.text,
+          selected && styles.selectedText,
+        ]}
+      >
+        {title}
+      </Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
-    chip: {
-        paddingVertical: SPACING.sm,
-        paddingHorizontal: SPACING.lg,
-        borderWidth: 1,
-        borderColor: COLORS.border,
-        backgroundColor: COLORS.surface,
-        marginRight: SPACING.sm,
-        borderRadius: RADIUS.pill,
-    },
+  chip: {
+    paddingVertical:
+      Platform.OS === "ios"
+        ? SPACING.md
+        : SPACING.sm,
 
-    selectedChip: {
-        backgroundColor: COLORS.primary,
-        borderColor: COLORS.primary,
-    },
+    paddingHorizontal:
+      Platform.OS === "ios"
+        ? SPACING.xl
+        : SPACING.lg,
 
-    text: {
-        ...TYPOGRAPHY.body,
-        color: COLORS.text,
-    },
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.surface,
 
-    selectedText: {
-        color: COLORS.surface,
-    },
+    marginRight: SPACING.sm,
 
-    pressed: {
-        opacity: 0.8,
-    },
+    borderRadius:
+      Platform.OS === "ios"
+        ? RADIUS.xl
+        : RADIUS.pill,
+
+    overflow: "hidden",
+  },
+
+  selectedChip: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+
+  text: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.text,
+
+    letterSpacing:
+      Platform.OS === "ios" ? 0.2 : 0,
+  },
+
+  selectedText: {
+    color: COLORS.surface,
+  },
+
+  pressed: {
+    opacity: 0.75,
+    transform: [{ scale: 0.97 }],
+  },
 });
-
-// import React from "react";
-// import { Pressable, Text } from "react-native";
-
-// export default function CategoryChip({ title, onPress }) {
-//     return (
-//         <Pressable onPress={onPress}>
-//             <Text>HELLO</Text>
-//         </Pressable>
-//     );
-// }

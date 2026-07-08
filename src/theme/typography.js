@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+const IOS = Platform.OS === "ios";
 export const FONT_FAMILY = {
   logo: "Arsenal-Regular",
   logoBold: "Arsenal-Bold",
@@ -12,13 +14,13 @@ export const FONT_FAMILY = {
 };
 
 export const FONT_SIZE = {
-  xs: 12,
-  sm: 14,
-  md: 16,
-  lg: 18,
-  xl: 24,
-  xxl: 32,
-  display: 44,
+  xs: IOS ? 13 : 12,
+  sm: IOS ? 15 : 14,
+  md: IOS ? 17 : 16,
+  lg: IOS ? 19 : 18,
+  xl: IOS ? 26 : 24,
+  xxl: IOS ? 34 : 32,
+  display: IOS ? 46 : 44,
 };
 
 export const LINE_HEIGHT = {

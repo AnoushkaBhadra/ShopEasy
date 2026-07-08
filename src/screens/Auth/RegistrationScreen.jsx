@@ -7,6 +7,7 @@ import {
   Pressable,
   KeyboardAvoidingView,
   StyleSheet,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
@@ -65,7 +66,7 @@ export default function RegistrationScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView style={styles.safeArea} behavior="padding">
+      <KeyboardAvoidingView style={styles.safeArea}   behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.title}>Create Account</Text>
@@ -151,14 +152,15 @@ export default function RegistrationScreen({ navigation }) {
                 </View>
 
                 <Pressable
-                  onPress={() => handleSubmit()}
-                  disabled={isRegistering}
-                  style={({ pressed }) => [
-                    styles.button,
-                    pressed && styles.buttonPressed,
-                    isRegistering && { opacity: 0.7 },
-                  ]}
-                >
+                    onPress={() => handleSubmit()}
+                    disabled={isRegistering}
+                    android_ripple={{ color: COLORS.primaryLight }}
+                    style={({ pressed }) => [
+                        styles.button,
+                        Platform.OS === "ios" && pressed && styles.buttonPressed,
+                        isRegistering && { opacity: 0.7 },
+                    ]}
+                    >
                   <Text style={styles.buttonText}>
                     {isRegistering
                       ? "Creating Account..."
@@ -191,11 +193,12 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: COLORS.background,
-    paddingHorizontal: SPACING.lg,
-  },
+  flex: 1,
+  justifyContent: "center",
+  backgroundColor: COLORS.background,
+  paddingHorizontal: SPACING.lg,
+  paddingTop: Platform.OS === "android" ? SPACING.sm : 0,
+},
 
   header: {
     marginBottom: SPACING.xl,
@@ -213,14 +216,14 @@ const styles = StyleSheet.create({
   },
 
   form: {
-    backgroundColor: COLORS.surface,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: RADIUS.lg,
-    padding: SPACING.lg,
-    marginBottom: SPACING.xl,
-    ...SHADOW.card,
-  },
+  backgroundColor: COLORS.surface,
+  borderWidth: 1,
+  borderColor: COLORS.border,
+  borderRadius: Platform.OS === "ios" ? 18 : 12,
+  padding: SPACING.lg,
+  marginBottom: SPACING.xl,
+  ...SHADOW.card,
+},
 
   fieldGroup: {
     marginTop: SPACING.sm,
@@ -235,31 +238,41 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    height: 48,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: RADIUS.md,
-    paddingHorizontal: SPACING.md,
-    backgroundColor: COLORS.surface,
-    color: COLORS.text,
-    ...TYPOGRAPHY.body,
-  },
+  height: Platform.OS === "ios" ? 52 : 48,
+  borderWidth: 1,
+  borderColor: COLORS.border,
+  borderRadius: Platform.OS === "ios" ? 12 : 8,
+  paddingHorizontal: SPACING.md,
+  paddingVertical: Platform.OS === "ios" ? 12 : 8,
+  backgroundColor: COLORS.surface,
+  color: COLORS.text,
+  ...TYPOGRAPHY.body,
+},
 
   error: {
-    color: "red",
-    fontSize: 12,
-    marginTop: 4,
-  },
+  color: COLORS.error,
+  ...TYPOGRAPHY.caption,
+  marginTop: 4,
+},
 
   button: {
-    height: 48,
-    backgroundColor: COLORS.primary,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: SPACING.md,
-    borderRadius: RADIUS.md,
-    ...SHADOW.button,
-  },
+  height: Platform.OS === "ios" ? 52 : 48,
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: SPACING.md,
+  borderRadius: Platform.OS === "ios" ? 12 : 8,
+
+  ...SHADOW.button,
+
+  ...Platform.select({
+    ios: {
+      backgroundColor: COLORS.primaryDark,
+    },
+    android: {
+      backgroundColor: COLORS.primary,
+    },
+  }),
+},
 
   buttonPressed: {
     backgroundColor: COLORS.primaryDark,

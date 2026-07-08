@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable, Platform } from "react-native";
 import { COLORS } from "../../theme/colors";
 import { RADIUS } from "../../theme/radius";
 import TYPOGRAPHY from "../../theme/typography";
@@ -20,11 +20,12 @@ export default function WelcomeScreen({ navigation }) {
             </Text>
 
             <Pressable
+                onPress={() => navigation.navigate("Auth")}
+                android_ripple={{ color: COLORS.primaryLight }}
                 style={({ pressed }) => [
                     styles.button,
-                    pressed && styles.buttonPressed,
+                    Platform.OS === "ios" && pressed && styles.buttonPressed,
                 ]}
-                onPress={() => navigation.navigate("Auth")}
             >
                 <Text style={styles.buttonText}>Login with Email</Text>
             </Pressable>
@@ -34,12 +35,13 @@ export default function WelcomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: SPACING.lg,
-        backgroundColor: COLORS.background,
-    },
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: SPACING.lg,
+    paddingTop: Platform.OS === "android" ? SPACING.sm : 0,
+    backgroundColor: COLORS.background,
+},
  
     logo: {
         width: 160,
@@ -56,27 +58,37 @@ const styles = StyleSheet.create({
     },
  
     subtitle: {
-        ...TYPOGRAPHY.body,
-        color: COLORS.textSecondary,
-        textAlign: "center",
-        maxWidth: 300,
-        marginBottom: SPACING.xxl,
-    },
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+    textAlign: "center",
+    maxWidth: Platform.OS === "ios" ? 320 : 300,
+    marginBottom: SPACING.xxl,
+},
  
     // Minimal button: no border radius, clean shadow
     button: {
-        width: "100%",
-        maxWidth: 320,
-        height: 48,
-        backgroundColor: COLORS.primary,
-        justifyContent: "center",
-        alignItems: "center",
-        ...SHADOW.button,
-    },
+    width: "100%",
+    maxWidth: 320,
+    height: Platform.OS === "ios" ? 52 : 48,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: Platform.OS === "ios" ? RADIUS.lg : RADIUS.md,
+
+    ...Platform.select({
+        ios: {
+            backgroundColor: COLORS.primaryDark,
+        },
+        android: {
+            backgroundColor: COLORS.primary,
+        },
+    }),
+
+    ...SHADOW.button,
+},
  
-    buttonPressed: {
-        backgroundColor: COLORS.primaryDark,
-    },
+   buttonPressed: {
+    backgroundColor: COLORS.primaryDark,
+},
  
     buttonText: {
         ...TYPOGRAPHY.button,
