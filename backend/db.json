@@ -124,11 +124,37 @@
       "latitude": 28.4595,
       "longitude": 77.0266,
       "isDefault": true
+    },
+    {
+      "userId": "1",
+      "label": "Home",
+      "addressLine": "Rajarhat",
+      "city": "Kolkata",
+      "state": "West Bengal",
+      "pincode": "700136",
+      "country": "India",
+      "latitude": 22.637738715620355,
+      "longitude": 88.45015752420277,
+      "isDefault": false,
+      "id": "9guuuGV4j0s"
+    },
+    {
+      "userId": "1",
+      "label": "Home",
+      "addressLine": "xcvbn",
+      "city": "kolkata",
+      "state": "wb",
+      "pincode": "700136",
+      "country": "india",
+      "latitude": 22.5850317422161,
+      "longitude": 88.36885940468296,
+      "isDefault": true,
+      "id": "H2JWAtVwsIo"
     }
   ],
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Premium Wireless Headphones",
       "category": "Electronics",
       "brand": "Sony",
@@ -147,7 +173,7 @@
       "featured": true
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Elegant Wrist Watch",
       "category": "Accessories",
       "brand": "Fossil",
@@ -166,7 +192,7 @@
       "featured": true
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Ceramic Coffee Mug",
       "category": "Home & Living",
       "brand": "Local Artisan",
@@ -185,7 +211,7 @@
       "featured": false
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Minimalist Desk Lamp",
       "category": "Home & Living",
       "brand": "BrightHome",
@@ -204,7 +230,7 @@
       "featured": false
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Premium Running Shoes",
       "category": "Footwear",
       "brand": "Nike",
@@ -223,7 +249,7 @@
       "featured": true
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Leather Crossbody Bag",
       "category": "Accessories",
       "brand": "Fossil",
@@ -242,7 +268,7 @@
       "featured": false
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Wireless Charging Pad",
       "category": "Electronics",
       "brand": "Belkin",
@@ -261,7 +287,7 @@
       "featured": false
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Portable Bluetooth Speaker",
       "category": "Electronics",
       "brand": "JBL",
@@ -280,7 +306,7 @@
       "featured": true
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Yoga Mat Premium",
       "category": "Sports & Fitness",
       "brand": "Liforme",
@@ -299,7 +325,7 @@
       "featured": false
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Stainless Steel Water Bottle",
       "category": "Home & Living",
       "brand": "Hydro Flask",
@@ -318,7 +344,7 @@
       "featured": false
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Canvas Backpack",
       "category": "Accessories",
       "brand": "Fjallraven",
@@ -337,7 +363,7 @@
       "featured": false
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Desktop Organizer Set",
       "category": "Home & Living",
       "brand": "Umbra",

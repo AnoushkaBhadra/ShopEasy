@@ -9,9 +9,10 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { useDispatch } from "react-redux";
+import { Formik } from "formik";
 
+import { loginSchema } from "../../validation/loginSchema";
 import { login as loginUser } from "../../services/authService";
 import { saveAuthData, getToken } from "../../utils/authStorage";
 import { login, setLoading } from "../../store/slices/authSlice";
@@ -23,17 +24,14 @@ import { SHADOW } from "../../theme/shadows";
 
 export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLocalLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (values) => {
     dispatch(setLoading(true));
     setLocalLoading(true);
 
     try {
-      const result = await loginUser(email, password);
+      const result = await loginUser(values.email, values.password);
 
       await saveAuthData(result.token, result.user);
 
@@ -50,7 +48,7 @@ export default function LoginScreen({ navigation }) {
         login({
           user: result.user,
           token: result.token,
-        }),
+        })
       );
 
       Alert.alert("Success", "Login successful");
@@ -70,6 +68,7 @@ export default function LoginScreen({ navigation }) {
       setLocalLoading(false);
     }
   };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
@@ -79,51 +78,82 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.subtitle}>Sign in to continue shopping</Text>
           </View>
 
-          <View style={styles.form}>
-            <View style={styles.fieldGroup}>
-              <Text style={styles.label}>Email</Text>
-              <TextInput
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                placeholder="Enter your email"
-                placeholderTextColor={COLORS.textTertiary}
-                style={styles.input}
-                editable={!loading}
-              />
-            </View>
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validationSchema={loginSchema}
+            onSubmit={handleLogin}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+            }) => (
+              <View style={styles.form}>
+                <View style={styles.fieldGroup}>
+                  <Text style={styles.label}>Email</Text>
 
-            <View style={styles.fieldGroup}>
-              <Text style={styles.label}>Password</Text>
-              <TextInput
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                placeholder="Enter your password"
-                placeholderTextColor={COLORS.textTertiary}
-                style={styles.input}
-                editable={!loading}
-              />
-            </View>
+                  <TextInput
+                    value={values.email}
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    placeholder="Enter your email"
+                    placeholderTextColor={COLORS.textTertiary}
+                    style={styles.input}
+                    editable={!loading}
+                  />
 
-            <Pressable
-              onPress={handleLogin}
-              disabled={loading}
-              style={({ pressed }) => [
-                styles.button,
-                pressed && !loading && styles.buttonPressed,
-                loading && { opacity: 0.7 },
-              ]}
-            >
-              <Text style={styles.buttonText}>
-                {loading ? "Logging in..." : "Login"}
-              </Text>
-            </Pressable>
-          </View>
+                  {touched.email && errors.email && (
+                    <Text style={styles.error}>{errors.email}</Text>
+                  )}
+                </View>
+
+                <View style={styles.fieldGroup}>
+                  <Text style={styles.label}>Password</Text>
+
+                  <TextInput
+                    value={values.password}
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    secureTextEntry
+                    placeholder="Enter your password"
+                    placeholderTextColor={COLORS.textTertiary}
+                    style={styles.input}
+                    editable={!loading}
+                  />
+
+                  {touched.password && errors.password && (
+                    <Text style={styles.error}>{errors.password}</Text>
+                  )}
+                </View>
+
+                <Pressable
+                  onPress={handleSubmit}
+                  disabled={loading}
+                  style={({ pressed }) => [
+                    styles.button,
+                    pressed && !loading && styles.buttonPressed,
+                    loading && { opacity: 0.7 },
+                  ]}
+                >
+                  <Text style={styles.buttonText}>
+                    {loading ? "Logging in..." : "Login"}
+                  </Text>
+                </Pressable>
+              </View>
+            )}
+          </Formik>
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>Not registered?</Text>
+
             <Pressable onPress={() => navigation.navigate("Registration")}>
               <Text style={styles.link}>Sign Up</Text>
             </Pressable>
@@ -187,6 +217,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     color: COLORS.text,
     ...TYPOGRAPHY.body,
+  },
+
+  error: {
+    color: "red",
+    fontSize: 12,
+    marginTop: 4,
   },
 
   button: {

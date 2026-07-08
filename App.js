@@ -10,6 +10,8 @@ import { store, persistor } from "./src/store/store";
 
 export default function App() {
   const fontsLoaded = LoadFonts();
+  console.log(process.env);
+console.log(process.env.EXPO_PUBLIC_AUTH_API);
 
   if (!fontsLoaded) {
     return null;

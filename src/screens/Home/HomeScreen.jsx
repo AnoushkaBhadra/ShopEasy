@@ -18,7 +18,7 @@ import { addToCart } from "../../store/slices/cartSlice";
 
 export default function HomeScreen({ navigation }) {
     const dispatch = useDispatch();
-
+    console.log("HomeScreen mounted");
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
 
