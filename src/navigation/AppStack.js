@@ -42,7 +42,7 @@ export default function AppStack() {
 
       {/* Home */}
       <Stack.Screen
-        name="Product Details"
+        name="ProductDetails"
         component={ProductDetailsScreen}
       />
 

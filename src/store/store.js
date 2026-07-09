@@ -12,7 +12,7 @@ import cartReducer from "./slices/cartSlice";
 import productReducer from "./slices/productSlice";
 import wishlistReducer from "./slices/wishlistSlice";
 import locationReducer from "./slices/locationSlice";
-
+import reviewReducer from './slices/reviewSlice';
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
@@ -25,6 +25,7 @@ const rootReducer = combineReducers({
   products: productReducer,
   wishlist: wishlistReducer,
   location: locationReducer,
+  reviews: reviewReducer,
 });
 
 const persistedReducer = persistReducer(
