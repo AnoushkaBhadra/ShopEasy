@@ -129,7 +129,7 @@ export default function HomeScreen({ navigation }) {
               (product) => product.id === item.id
             )}
             onPress={() =>
-              navigation.navigate("Product Details", {
+              navigation.navigate("ProductDetails", {
                 product: item,
               })
             }
