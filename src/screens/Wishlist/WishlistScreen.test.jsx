@@ -98,7 +98,7 @@ describe("WishlistScreen", () => {
 
     await fireEvent.press(getByText(wishlist[0].name));
 
-    expect(navigation.navigate).toHaveBeenCalledWith("Product Details", {
+    expect(navigation.navigate).toHaveBeenCalledWith("ProductDetails", {
       product: wishlist[0],
     });
   });

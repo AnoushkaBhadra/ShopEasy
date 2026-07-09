@@ -45,7 +45,7 @@ export default function WishlistScreen({ navigation }) {
                         isLiked={true}
                         onPress={() =>
                             navigation.navigate(
-                                "Product Details",
+                                "ProductDetails",
                                 { product: item }
                             )
                         }

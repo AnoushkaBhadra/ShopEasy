@@ -1,19 +1,29 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import ProductDetailsScreen from "./ProductDetailsScreen";
 import { addToCart } from "../../store/slices/cartSlice";
+import {
+  setReviews,
+  setLoading as setReviewsLoading,
+} from "../../store/slices/reviewSlice";
+import { getReviewsByProduct } from "../../api/reviewApi";
 
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
+  useSelector: jest.fn(),
+}));
+
+jest.mock("../../api/reviewApi", () => ({
+  getReviewsByProduct: jest.fn(),
 }));
 
 describe("ProductDetailsScreen", () => {
   const dispatch = jest.fn();
   const product = {
     id: 1,
-    title: "Wireless Headphones",
+    name: "Wireless Headphones",
     category: "Electronics",
     price: 2500,
     rating: 4.5,
@@ -24,6 +34,16 @@ describe("ProductDetailsScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     useDispatch.mockReturnValue(dispatch);
+    useSelector.mockImplementation((selector) =>
+      selector({
+        reviews: {
+          reviews: [],
+          loading: false,
+          error: null,
+        },
+      })
+    );
+    getReviewsByProduct.mockResolvedValue([]);
   });
 
   it("renders product details from route params", async () => {
@@ -34,10 +54,13 @@ describe("ProductDetailsScreen", () => {
 
     await waitFor(() => {
       expect(getByText(product.category)).toBeTruthy();
-      expect(getByText(product.title)).toBeTruthy();
+      expect(getByText(product.name)).toBeTruthy();
       expect(getByText(/2500/)).toBeTruthy();
       expect(getByText(/4.5/)).toBeTruthy();
       expect(getByText(product.description)).toBeTruthy();
+      expect(dispatch).toHaveBeenCalledWith(setReviewsLoading(true));
+      expect(getReviewsByProduct).toHaveBeenCalledWith(product.id);
+      expect(dispatch).toHaveBeenCalledWith(setReviews([]));
     });
   });
 
