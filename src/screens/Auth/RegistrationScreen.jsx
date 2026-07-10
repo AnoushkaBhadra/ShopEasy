@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
 
 import { registrationSchema } from "../../validation/registrationSchema";
-import { saveAuthData, getToken } from "../../utils/authStorage";
+
 import { register } from "../../services/authService";
 
 import { COLORS } from "../../theme/colors";
@@ -34,21 +34,19 @@ export default function RegistrationScreen({ navigation }) {
       const response = await register(
         values.name,
         values.email,
-        values.password
+        values.password,
       );
 
       console.log(values.name, values.email, values.password);
 
-      await saveAuthData(response.token, response.user);
+      Alert.alert("Success", "Account created successfully.", [
+        {
+          text: "OK",
+          onPress: () => navigation.replace("Login"),
+        },
+      ]);
 
-      const storedToken = await getToken();
-
-      console.log("RESULT TOKEN:", response.token);
-      console.log("TOKEN STORED:", storedToken);
-
-      if (!storedToken) {
-        throw new Error("Token not saved");
-      }
+      console.log("REGISTRATION SUCCESSFUL");
 
       Alert.alert("Success", "User Registered");
 
@@ -66,7 +64,10 @@ export default function RegistrationScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView style={styles.safeArea}   behavior={Platform.OS === "ios" ? "padding" : "height"}>
+      <KeyboardAvoidingView
+        style={styles.safeArea}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.title}>Create Account</Text>
@@ -152,19 +153,17 @@ export default function RegistrationScreen({ navigation }) {
                 </View>
 
                 <Pressable
-                    onPress={() => handleSubmit()}
-                    disabled={isRegistering}
-                    android_ripple={{ color: COLORS.primaryLight }}
-                    style={({ pressed }) => [
-                        styles.button,
-                        Platform.OS === "ios" && pressed && styles.buttonPressed,
-                        isRegistering && { opacity: 0.7 },
-                    ]}
-                    >
+                  onPress={() => handleSubmit()}
+                  disabled={isRegistering}
+                  android_ripple={{ color: COLORS.primaryLight }}
+                  style={({ pressed }) => [
+                    styles.button,
+                    Platform.OS === "ios" && pressed && styles.buttonPressed,
+                    isRegistering && { opacity: 0.7 },
+                  ]}
+                >
                   <Text style={styles.buttonText}>
-                    {isRegistering
-                      ? "Creating Account..."
-                      : "Create Account"}
+                    {isRegistering ? "Creating Account..." : "Create Account"}
                   </Text>
                 </Pressable>
               </View>
@@ -172,9 +171,7 @@ export default function RegistrationScreen({ navigation }) {
           </Formik>
 
           <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              Already have an account?
-            </Text>
+            <Text style={styles.footerText}>Already have an account?</Text>
 
             <Pressable onPress={() => navigation.navigate("Login")}>
               <Text style={styles.link}>Login</Text>
@@ -193,12 +190,12 @@ const styles = StyleSheet.create({
   },
 
   container: {
-  flex: 1,
-  justifyContent: "center",
-  backgroundColor: COLORS.background,
-  paddingHorizontal: SPACING.lg,
-  paddingTop: Platform.OS === "android" ? SPACING.sm : 0,
-},
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: COLORS.background,
+    paddingHorizontal: SPACING.lg,
+    paddingTop: Platform.OS === "android" ? SPACING.sm : 0,
+  },
 
   header: {
     marginBottom: SPACING.xl,
@@ -216,14 +213,14 @@ const styles = StyleSheet.create({
   },
 
   form: {
-  backgroundColor: COLORS.surface,
-  borderWidth: 1,
-  borderColor: COLORS.border,
-  borderRadius: Platform.OS === "ios" ? 18 : 12,
-  padding: SPACING.lg,
-  marginBottom: SPACING.xl,
-  ...SHADOW.card,
-},
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: Platform.OS === "ios" ? 18 : 12,
+    padding: SPACING.lg,
+    marginBottom: SPACING.xl,
+    ...SHADOW.card,
+  },
 
   fieldGroup: {
     marginTop: SPACING.sm,
@@ -238,41 +235,41 @@ const styles = StyleSheet.create({
   },
 
   input: {
-  height: Platform.OS === "ios" ? 52 : 48,
-  borderWidth: 1,
-  borderColor: COLORS.border,
-  borderRadius: Platform.OS === "ios" ? 12 : 8,
-  paddingHorizontal: SPACING.md,
-  paddingVertical: Platform.OS === "ios" ? 12 : 8,
-  backgroundColor: COLORS.surface,
-  color: COLORS.text,
-  ...TYPOGRAPHY.body,
-},
+    height: Platform.OS === "ios" ? 52 : 48,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: Platform.OS === "ios" ? 12 : 8,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: Platform.OS === "ios" ? 12 : 8,
+    backgroundColor: COLORS.surface,
+    color: COLORS.text,
+    ...TYPOGRAPHY.body,
+  },
 
   error: {
-  color: COLORS.error,
-  ...TYPOGRAPHY.caption,
-  marginTop: 4,
-},
+    color: COLORS.error,
+    ...TYPOGRAPHY.caption,
+    marginTop: 4,
+  },
 
   button: {
-  height: Platform.OS === "ios" ? 52 : 48,
-  justifyContent: "center",
-  alignItems: "center",
-  marginTop: SPACING.md,
-  borderRadius: Platform.OS === "ios" ? 12 : 8,
+    height: Platform.OS === "ios" ? 52 : 48,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: SPACING.md,
+    borderRadius: Platform.OS === "ios" ? 12 : 8,
 
-  ...SHADOW.button,
+    ...SHADOW.button,
 
-  ...Platform.select({
-    ios: {
-      backgroundColor: COLORS.primaryDark,
-    },
-    android: {
-      backgroundColor: COLORS.primary,
-    },
-  }),
-},
+    ...Platform.select({
+      ios: {
+        backgroundColor: COLORS.primaryDark,
+      },
+      android: {
+        backgroundColor: COLORS.primary,
+      },
+    }),
+  },
 
   buttonPressed: {
     backgroundColor: COLORS.primaryDark,
