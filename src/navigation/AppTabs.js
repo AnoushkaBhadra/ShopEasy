@@ -34,6 +34,10 @@ export default function AppTabs() {
                 case "Cart":
                 iconName = focused ? "cart" : "cart-outline";
                 break;
+                
+                case "WishList": 
+                iconName = focused ? "heart" : "heart-outline";
+                break;
 
                 case "Profile":
                 iconName = focused ? "person" : "person-outline";
@@ -48,8 +52,9 @@ export default function AppTabs() {
         })}>
         <Tab.Screen name="Home" component={HomeScreen}/>
         <Tab.Screen name="Cart" component={CartScreen}/>
-        <Tab.Screen name="Profile" component={ProfileScreen}/>
         <Tab.Screen name="WishList" component={WishlistScreen}/>
+        <Tab.Screen name="Profile" component={ProfileScreen}/>
+        
         </Tab.Navigator>
     );
 }

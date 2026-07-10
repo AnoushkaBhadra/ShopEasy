@@ -44,6 +44,18 @@
       "phone": "9876543214",
       "profileImage": "https://i.pravatar.cc/300?img=5",
       "createdAt": "2026-06-26T08:20:00Z"
+    },
+    {
+      "id": "nD5ORDMONOI",
+      "email": "anoushka@gmail.com",
+      "name": "anoushka",
+      "password": "$2b$10$I1G44NxOuUYL7n6qiXcz8eAH3SaWm4NKCkeHayajBDX0X/J/hZI3y"
+    },
+    {
+      "id": "Sh99xx3gZFw",
+      "email": "akash@gmail.com",
+      "name": "akash",
+      "password": "$2b$10$Rgn7zLCozrXi2FJ83B6tEetKZEfmLzDeVA.ILHijzJfpMDh5wgRha"
     }
   ],
   "addresses": [

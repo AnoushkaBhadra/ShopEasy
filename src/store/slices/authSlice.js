@@ -27,7 +27,7 @@ const authSlice = createSlice({
         setLoading: (state, action) => {
             state.loading = action.payload;
         }, 
-        restoreSection: (state, action) => {
+        restoreSession: (state, action) => {
             state.user = action.payload.user; 
             state.token = action.payload.token; 
             state.isAuthenticated = !!action.payload.token; 
