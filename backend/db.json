@@ -56,6 +56,12 @@
       "email": "akash@gmail.com",
       "name": "akash",
       "password": "$2b$10$Rgn7zLCozrXi2FJ83B6tEetKZEfmLzDeVA.ILHijzJfpMDh5wgRha"
+    },
+    {
+      "id": "Syd1lMs_4eE",
+      "email": "qwerty@gmail.com",
+      "name": "qwerty123",
+      "password": "$2b$10$3K5m0MeIjChSYrto9LHPYO15KIFAkc93F3/6DvV7EXQ5ddpXHXVDa"
     }
   ],
   "addresses": [
