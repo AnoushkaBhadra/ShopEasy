@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
 
 import { registrationSchema } from "../../validation/registrationSchema";
-
+import { saveAuthData, getToken } from "../../utils/authStorage";
 import { register } from "../../services/authService";
 
 import { COLORS } from "../../theme/colors";
@@ -39,18 +39,16 @@ export default function RegistrationScreen({ navigation }) {
 
       console.log(values.name, values.email, values.password);
 
-      Alert.alert(
-            "Success",
-            "Account created successfully.",
-            [
-              {
-                text: "OK",
-                onPress: () => navigation.replace("Login"),
-              },
-            ]
-          );
+      await saveAuthData(response.token, response.user);
 
-          console.log("REGISTRATION SUCCESSFUL");
+      const storedToken = await getToken();
+
+      console.log("RESULT TOKEN:", response.token);
+      console.log("TOKEN STORED:", storedToken);
+
+      if (!storedToken) {
+        throw new Error("Token not saved");
+      }
 
       Alert.alert("Success", "User Registered");
 
